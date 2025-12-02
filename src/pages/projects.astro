@@ -5,7 +5,7 @@ import Badge from "../components/Badge.astro";
 
 const projects = [
   {
-    title: "RespoBilis",
+    title: "RespoBilis - Capstone Project",
     description:
       "A Platform Utilizing Geolocation for Disaster Response & Relief Coordination in Tanauan. Built with Next.js and integrated mapping services for real-time disaster tracking and resource allocation.",
     technologies: ["Next.js", "TypeScript", "Tailwind CSS", "Supabase", "OSRM"],
@@ -13,7 +13,7 @@ const projects = [
     featured: true,
   },
   {
-    title: "apt.connect",
+    title: "apt.connect - Class Project",
     description:
       "Property Management System for Apartments to connect landlords and tenants with ease. Features include rent tracking, maintenance requests, and tenant communication.",
     technologies: ["Next.js", "React", "Node.js", "MySQL", "Tailwind CSS"],
@@ -40,13 +40,13 @@ const projects = [
           <h1 class="text-3xl md:text-5xl font-bold tracking-tight mb-2">
             Projects
           </h1>
-          <p class="text-muted-foreground text-sm md:text-base">
+          <p class="text-muted-foreground text-xs md:text-sm">
             A collection of my work and side projects
           </p>
         </div>
         <a
           href="/"
-          class="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg border border-input bg-background hover:bg-accent hover:text-accent-foreground transition-colors"
+          class="inline-flex items-center gap-2 px-4 py-2 text-[8px] sm:text-sm rounded-lg border border-input bg-background hover:bg-accent hover:text-accent-foreground transition-colors"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -93,6 +93,7 @@ const projects = [
                     <a
                       href={project.link}
                       class="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+                      target= _blank
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
