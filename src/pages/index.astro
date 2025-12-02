@@ -1,0 +1,565 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Card from "../components/Card.astro";
+import Badge from "../components/Badge.astro";
+import { cn } from "../lib/utils";
+
+const experience = [
+  {
+    role: "Student Assistant",
+    company: "FAITH Colleges",
+    year: "2024",
+    current: true,
+  },
+];
+
+const projects = [
+  {
+    title: "RespoBilis",
+    desc: "A Platform Utilizing Geolocation for Disaster Response & Relief Coordination in Tanauan",
+    link: "#",
+    tag: "Next.js",
+  },
+  {
+    title: "apt.connect",
+    desc: "Property Management System for Apartments to connect landlords and tenants with ease.",
+    link: "#",
+    tag: "Next.js",
+  },
+];
+
+const techStack = {
+  Frontend: ["React", "Next.js", "TypeScript", "Tailwind CSS"],
+  Backend: ["Supabase", "Node.js", "Express.js"],
+  Cloud: ["AWS"],
+};
+---
+
+<Layout>
+  <main class="container mx-auto max-w-5xl p-4 md:p-8 space-y-4">
+    <!-- Navigation -->
+    <nav class="flex justify-end mb-4">
+      <a
+        href="/projects"
+        class="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg border border-input bg-background hover:bg-accent hover:text-accent-foreground transition-colors"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          ><path
+            d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"
+          ></path></svg
+        >
+        Projects
+      </a>
+    </nav>
+
+    <!-- Header Section -->
+    <section class="mb-4 md:mb-8 animate-fade-in">
+      <div class="flex flex-col md:flex-row items-center gap-4 md:gap-7">
+        <div class="relative shrink-0 animate-scale-in">
+          <img
+            src="/Avatar.jpg"
+            alt="Profile"
+            class="w-24 h-24 md:w-40 md:h-40 rounded-md object-cover border-2 md:border-4 border-border shadow-xl"
+          />
+        </div>
+        <div
+          class="flex-1 text-center md:text-left space-y-3 md:space-y-4 w-full animate-slide-up animate-delay-200"
+        >
+          <div>
+            <div
+              class="flex items-center justify-center md:justify-start gap-2 mb-2"
+            >
+              <h1 class="text-2xl md:text-4xl font-bold tracking-tight">
+                Edric Russell Ramilo
+              </h1>
+            </div>
+            <p
+              class="text-sm md:text-base text-muted-foreground flex items-center justify-center md:justify-start gap-2"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                ><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"
+                ></path><circle cx="12" cy="10" r="3"></circle></svg
+              >
+              Batangas, Philippines
+            </p>
+            <p class="text-lg md:text-xl font-medium mt-2">
+              Aspiring Cloud Engineer
+            </p>
+          </div>
+
+          <div
+            class="flex flex-wrap justify-center md:justify-start gap-2 md:gap-3"
+          >
+            <a
+              href="mailto:edric.ramilo191@gmail.com"
+              class="inline-flex items-center gap-2 px-3 py-2 text-sm md:text-base rounded-lg border border-input bg-background hover:bg-accent hover:text-accent-foreground transition-colors"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                ><rect width="20" height="16" x="2" y="4" rx="2"></rect><path
+                  d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg
+              >
+              <span class="hidden sm:inline">Send Email</span>
+              <span class="sm:hidden">Email</span>
+            </a>
+            <a
+              href="https://www.linkedin.com/in/edric-russell-ramilo/"
+              class="inline-flex items-center gap-2 px-3 py-2 text-sm md:text-base rounded-lg border border-input bg-background hover:bg-accent hover:text-accent-foreground transition-colors"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                ><path
+                  d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"
+                ></path><rect width="4" height="12" x="2" y="9"></rect></svg
+              >
+              <span class="sr-only">LinkedIn</span>
+            </a>
+            <a
+              href="https://github.com/Ramilo-Edric03"
+              class="inline-flex items-center gap-2 px-3 py-2 text-sm md:text-base rounded-lg border border-input bg-background hover:bg-accent hover:text-accent-foreground transition-colors"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                ><path
+                  d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"
+                ></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg
+              >
+              <span class="sr-only">GitHub</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Content Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
+      <!-- Left Column -->
+      <div class="lg:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- About Section -->
+        <Card
+          title="About"
+          class="md:col-span-2 animate-slide-up animate-delay-100"
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="text-muted-foreground"
+            ><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle
+              cx="12"
+              cy="7"
+              r="4"></circle></svg
+          >
+          <div
+            class="space-y-4 text-muted-foreground leading-relaxed font-[500] text-[13px] md:text-[15px]"
+          >
+            <p>
+              I'm a 4th-year BSIT student focused on cloud infrastructure and
+              full-stack development. I enjoy designing and building systems
+              that solve real problems with scalable, maintainable solutions,
+              and I thrive on tackling complex workflows and technical
+              challenges.
+            </p>
+            <p>
+              I'm self-motivated and constantly learning through AWS Skill
+              Builder, AWS Educate, and hands-on projects. My core strengths are
+              problem-solving, discipline, and a growth mindset, which help me
+              refine both my skills and the systems I work on.
+            </p>
+            <p>
+              Currently, I'm expanding my expertise in cloud services and
+              full-stack deployment pipelines, and I'm looking to connect with
+              developers, mentors, and communities in cloud engineering to
+              collaborate, contribute, and grow.
+            </p>
+          </div>
+        </Card>
+
+        <!-- Tech Stack -->
+        <Card
+          title="Tech Stack"
+          class="md:col-span-2 animate-slide-up animate-delay-200"
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="text-muted-foreground"
+            ><polyline points="16 18 22 12 16 6"></polyline><polyline
+              points="8 6 2 12 8 18"></polyline></svg
+          >
+          <div class="space-y-6">
+            {
+              Object.entries(techStack).map(([category, techs]) => (
+                <div>
+                  <h4 class="text-sm font-semibold mb-3 text-muted-foreground">
+                    {category}
+                  </h4>
+                  <div class="flex flex-wrap gap-2">
+                    {techs.map((tech) => (
+                      <Badge variant="secondary" class="px-3 py-1 text-sm">
+                        {tech}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        </Card>
+
+        <!-- Current Focus -->
+        <Card title="Current Focus" class="animate-slide-up animate-delay-300">
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="text-muted-foreground"
+            ><circle cx="12" cy="12" r="10"></circle><polyline
+              points="12 6 12 12 16 14"></polyline></svg
+          >
+          <div class="space-y-4 text-muted-foreground text-sm">
+            <p>
+              Actively learning cloud architecture and AWS services through
+              hands-on projects and certifications.
+            </p>
+            <p>
+              Building full-stack applications with modern frameworks and
+              exploring serverless technologies.
+            </p>
+          </div>
+        </Card>
+
+        <!-- Recent Projects -->
+        <Card
+          title="Projects"
+          href="/projects"
+          class="animate-slide-up animate-delay-400"
+        >
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="text-muted-foreground"
+            ><path
+              d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"
+            ></path></svg
+          >
+          <div class="space-y-4">
+            {
+              projects.map((project) => (
+                <div class="flex flex-col gap-1 border-b border-border pb-3 last:border-0 last:pb-0">
+                  <div class="flex items-center justify-between">
+                    <h4 class="font-medium text-sm">{project.title}</h4>
+                    <Badge variant="outline" class="text-[10px] h-5 px-1.5">
+                      {project.tag}
+                    </Badge>
+                  </div>
+                  <p class="text-xs text-muted-foreground line-clamp-2">
+                    {project.desc}
+                  </p>
+                </div>
+              ))
+            }
+          </div>
+        </Card>
+      </div>
+
+      <!-- Right Column (Experience) -->
+      <div class="lg:col-span-1">
+        <Card title="Experience" class="h-full">
+          <svg
+            slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="text-muted-foreground"
+            ><rect width="20" height="14" x="2" y="7" rx="2" ry="2"></rect><path
+              d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg
+          >
+          <div class="relative border-l border-border ml-3 space-y-8 py-2">
+            {
+              experience.map((job) => (
+                <div class="relative pl-6">
+                  <span
+                    class={cn(
+                      "absolute -left-[5px] top-1.5 h-2.5 w-2.5 rounded-full border border-background",
+                      job.current ? "bg-primary" : "bg-muted-foreground/30"
+                    )}
+                  />
+                  <div class="flex flex-col gap-1">
+                    <span class="text-xs font-mono text-muted-foreground border border-border px-1.5 py-0.5 rounded w-fit">
+                      {job.year}
+                    </span>
+                    <h4 class="font-medium text-sm leading-none mt-1">
+                      {job.role}
+                    </h4>
+                    <p class="text-xs text-muted-foreground">{job.company}</p>
+                  </div>
+                </div>
+              ))
+            }
+            <div class="relative pl-6">
+              <span
+                class="absolute -left-[5px] top-1.5 h-2.5 w-2.5 rounded-full border border-background bg-muted-foreground/30"
+              ></span>
+              <div class="flex flex-col gap-1">
+                <span
+                  class="text-xs font-mono text-muted-foreground border border-border px-1.5 py-0.5 rounded w-fit"
+                  >2022</span
+                >
+                <h4 class="font-medium text-sm leading-none mt-1">
+                  Hello World! 👋
+                </h4>
+                <p class="text-xs text-muted-foreground">
+                  Wrote my first line of code
+                </p>
+              </div>
+            </div>
+          </div>
+        </Card>
+      </div>
+    </div>
+
+    <!-- Bottom Section -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <Card title="Recent Certifications" class="md:col-span-1">
+        <svg
+          slot="icon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="text-muted-foreground"
+          ><circle cx="12" cy="8" r="7"></circle><polyline
+            points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg
+        >
+        <ul class="space-y-3">
+          <li class="flex items-center justify-between text-sm">
+            <a
+              href="https://www.credly.com/badges/de4b2160-0dd5-4ef0-9c2d-f880cbbc813e/public_url"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex items-center justify-between text-[12px] gap-11 hover:text-primary ease-in-out duration-300"
+            >
+              <span class="font-medium">AWS Certified Cloud Practitioner</span>
+              <span class="text-muted-foreground">2025</span>
+            </a>
+          </li>
+        </ul>
+      </Card>
+      <Card title="Recommendations" class="md:col-span-2">
+        <svg
+          slot="icon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="text-muted-foreground"
+          ><path
+            d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"
+          ></path><path
+            d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"
+          ></path></svg
+        >
+        <blockquote
+          class="italic text-muted-foreground text-sm border-l-2 border-primary/50 pl-4 py-1"
+        >
+          "Edric was an excellent student to work with. He consistently arrived
+          on time, learned quickly, and contributed well in group settings. His
+          professionalism and positive attitude made working with him a genuine
+          pleasure"
+        </blockquote>
+        <div class="mt-4 flex items-center gap-3">
+          <div>
+            <p class="text-sm font-medium">Fatimah D. Sta. Romana</p>
+            <p class="text-xs text-muted-foreground">BSIT Student</p>
+          </div>
+        </div>
+      </Card>
+    </div>
+
+    <!-- Footer -->
+    <footer class="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <Card class="md:col-span-1 p-2">
+        <h4 class="font-semibold text-sm mb-2">Social Links</h4>
+        <div class="flex flex-col gap-2">
+          <a
+            href="https://linkedin.com/in/edric-russell-ramilo/"
+            class="text-sm text-muted-foreground hover:text-foreground flex items-center gap-2"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              ><path
+                d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"
+              ></path><rect width="4" height="12" x="2" y="9"></rect></svg
+            >
+            LinkedIn
+          </a>
+          <a
+            href="https://github.com/Ramilo-Edric03"
+            class="text-sm text-muted-foreground hover:text-foreground flex items-center gap-2"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              ><path
+                d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"
+              ></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg
+            >
+            GitHub
+          </a>
+        </div>
+      </Card>
+      <Card class="md:col-span-2 p-2">
+        <h4 class="font-semibold text-sm mb-2">Learning Goals</h4>
+        <p class="text-sm text-muted-foreground">
+          Currently pursuing AWS certifications and deepening my knowledge in
+          cloud architecture, serverless computing, and their best practices.
+          Always eager to learn and collaborate on full stack or cloud projects.
+        </p>
+        <a
+          href="mailto:edric.ramilo191@gmail.com"
+          class="text-xs text-primary mt-2 inline-block hover:underline"
+          >Let's connect &rarr;</a
+        >
+      </Card>
+      <Card class="md:col-span-1 pt-2">
+        <h4 class="font-semibold text-sm mb-2">Contact</h4>
+        <a
+          href="mailto:edric.ramilo191@gmail.com"
+          class="text-[11px] text-muted-foreground hover:text-foreground block"
+          >email: edric.ramilo191@gmail.com</a
+        >
+        <p
+          class="text-[11px] text-muted-foreground hover:text-foreground block"
+        >
+          phone: upon request
+        </p>
+      </Card>
+    </footer>
+
+    <!-- Credits -->
+    <div class="text-xs text-muted-foreground">
+      <p>
+        Design inspired by{" "}
+        <a
+          href="https://bryllim.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-primary hover:underline"
+        >
+          Bryl Lim's portfolio
+        </a>
+      </p>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  /* Custom scrollbar for the experience section if needed */
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+</style>

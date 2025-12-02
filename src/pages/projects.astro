@@ -1,0 +1,151 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Card from "../components/Card.astro";
+import Badge from "../components/Badge.astro";
+
+const projects = [
+  {
+    title: "RespoBilis",
+    description:
+      "A Platform Utilizing Geolocation for Disaster Response & Relief Coordination in Tanauan. Built with Next.js and integrated mapping services for real-time disaster tracking and resource allocation.",
+    technologies: ["Next.js", "TypeScript", "Tailwind CSS", "Supabase", "OSRM"],
+    link: "https://respobilis-v2.vercel.app",
+    featured: true,
+  },
+  {
+    title: "apt.connect",
+    description:
+      "Property Management System for Apartments to connect landlords and tenants with ease. Features include rent tracking, maintenance requests, and tenant communication.",
+    technologies: ["Next.js", "React", "Node.js", "MySQL", "Tailwind CSS"],
+    link: "#",
+    featured: true,
+  },
+  {
+    title: "Portfolio Website",
+    description:
+      "Personal portfolio website built with Astro and Tailwind CSS. Features a modern Bento grid layout with dark mode and responsive design.",
+    technologies: ["Astro", "TypeScript", "Tailwind CSS"],
+    link: "/",
+    featured: true,
+  },
+];
+---
+
+<Layout>
+  <main class="container mx-auto max-w-5xl p-4 md:p-8 space-y-8">
+    <!-- Header -->
+    <header class="mb-8 md:mb-12 animate-fade-in">
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <h1 class="text-3xl md:text-5xl font-bold tracking-tight mb-2">
+            Projects
+          </h1>
+          <p class="text-muted-foreground text-sm md:text-base">
+            A collection of my work and side projects
+          </p>
+        </div>
+        <a
+          href="/"
+          class="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg border border-input bg-background hover:bg-accent hover:text-accent-foreground transition-colors"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            ><path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg
+          >
+          Back Home
+        </a>
+      </div>
+    </header>
+
+    <!-- Featured Projects -->
+    <section class="space-y-4 animate-slide-up animate-delay-200">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {
+          projects
+            .filter((project) => project.featured)
+            .map((project) => (
+              <Card class="h-full">
+                <div class="p-6 space-y-4">
+                  <div class="space-y-2">
+                    <h3 class="text-xl font-bold">{project.title}</h3>
+                    <p class="text-sm text-muted-foreground leading-relaxed">
+                      {project.description}
+                    </p>
+                  </div>
+
+                  <div class="flex flex-wrap gap-2">
+                    {project.technologies.map((tech) => (
+                      <Badge variant="secondary" class="text-xs">
+                        {tech}
+                      </Badge>
+                    ))}
+                  </div>
+
+                  <div class="flex gap-3 pt-2">
+                    <a
+                      href={project.link}
+                      class="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                        <polyline points="15 3 21 3 21 9" />
+                        <line x1="10" y1="14" x2="21" y2="3" />
+                      </svg>
+                      View Project
+                    </a>
+                  </div>
+                </div>
+              </Card>
+            ))
+        }
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="mt-12 animate-slide-up animate-delay-300">
+      <Card class="p-8 text-center">
+        <h2 class="text-2xl font-bold mb-2">Have a project in mind?</h2>
+        <p class="text-muted-foreground mb-6">
+          I'm always open to discussing new projects and opportunities.
+        </p>
+        <a
+          href="mailto:edric.ramilo191@gmail.com"
+          class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            ><rect width="20" height="16" x="2" y="4" rx="2"></rect><path
+              d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg
+          >
+          Get in Touch
+        </a>
+      </Card>
+    </section>
+  </main>
+</Layout>
