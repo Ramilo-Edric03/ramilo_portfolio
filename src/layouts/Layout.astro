@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import InteractiveBackground from "../components/InteractiveBackground.astro";
+import { Analytics } from "@vercel/analytics/react";
 ---
 
 <!doctype html>
@@ -21,6 +22,7 @@ import InteractiveBackground from "../components/InteractiveBackground.astro";
   <body
     class="bg-background text-foreground font-sans antialiased selection:bg-primary selection:text-primary-foreground"
   >
+    <Analytics />
     <InteractiveBackground />
     <slot />
   </body>
