@@ -1,7 +1,7 @@
 ---
 import "../styles/global.css";
 import InteractiveBackground from "../components/InteractiveBackground.astro";
-import { Analytics } from "@vercel/analytics/react";
+import Analytics from "@vercel/analytics/astro";
 ---
 
 <!doctype html>
@@ -18,11 +18,11 @@ import { Analytics } from "@vercel/analytics/react";
       rel="stylesheet"
     />
     <title>Edric Ramilo | Aspiring Cloud Engineer</title>
+    <Analytics />
   </head>
   <body
     class="bg-background text-foreground font-sans antialiased selection:bg-primary selection:text-primary-foreground"
   >
-    <Analytics />
     <InteractiveBackground />
     <slot />
   </body>
