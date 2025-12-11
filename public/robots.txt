@@ -1,0 +1,10 @@
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Default: block other crawlers to reduce scraping
+User-agent: *
+Disallow: /
+

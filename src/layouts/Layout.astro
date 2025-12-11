@@ -2,6 +2,19 @@
 import "../styles/global.css";
 import InteractiveBackground from "../components/InteractiveBackground.astro";
 import Analytics from "@vercel/analytics/astro";
+
+const {
+  title = "Edric Ramilo | Aspiring Cloud Engineer",
+  description = "Portfolio of Edric Ramilo, an aspiring cloud engineer focused on AWS, full-stack development, and resilient systems.",
+  image = "/Avatar.jpg",
+} = Astro.props;
+
+const site = Astro.site ?? "https://Ramilo-Edric03.github.io";
+const canonical = new URL(Astro.url.pathname, site);
+const ogImage =
+  typeof image === "string" && image.startsWith("http")
+    ? image
+    : new URL(image, site).toString();
 ---
 
 <!doctype html>
@@ -17,7 +30,17 @@ import Analytics from "@vercel/analytics/astro";
       href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
       rel="stylesheet"
     />
-    <title>Edric Ramilo | Aspiring Cloud Engineer</title>
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical.toString()} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical.toString()} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+
     <Analytics />
   </head>
   <body

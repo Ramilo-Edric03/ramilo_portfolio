@@ -7,9 +7,10 @@ const projects = [
   {
     title: "RespoBilis - Capstone Project",
     description:
-      "A Platform Utilizing Geolocation for Disaster Response & Relief Coordination in Tanauan. Built with Next.js and integrated mapping services for real-time disaster tracking and resource allocation.",
+      "A Platform Utilizing Geolocation for Disaster Response & Relief Coordination in Tanauan City, Batangas. Built with Next.js and integrated mapping services for real-time disaster tracking and resource allocation.",
     technologies: ["Next.js", "TypeScript", "Tailwind CSS", "Supabase", "OSRM"],
     link: "https://respobilis-v2.vercel.app",
+    access: "request",
     featured: true,
   },
   {
@@ -17,7 +18,8 @@ const projects = [
     description:
       "Property Management System for Apartments to connect landlords and tenants with ease. Features include rent tracking, maintenance requests, and tenant communication.",
     technologies: ["Next.js", "React", "Node.js", "MySQL", "Tailwind CSS"],
-    link: "#",
+    link: "https://aptconnect-dev2.vercel.app/",
+    access: "public",
     featured: true,
   },
   {
@@ -26,12 +28,17 @@ const projects = [
       "Personal portfolio website built with Astro and Tailwind CSS. Features a modern Bento grid layout with dark mode and responsive design.",
     technologies: ["Astro", "TypeScript", "Tailwind CSS"],
     link: "/",
+    access: "public",
     featured: true,
   },
 ];
 ---
 
-<Layout>
+<Layout
+  title="Projects | Edric Ramilo"
+  description="Selected projects by Edric Ramilo covering cloud, full-stack, and portfolio work."
+  image="/Avatar.jpg"
+>
   <main class="container mx-auto max-w-5xl p-4 md:p-8 space-y-8">
     <!-- Header -->
     <header class="mb-8 md:mb-12 animate-fade-in">
@@ -46,7 +53,7 @@ const projects = [
         </div>
         <a
           href="/"
-          class="inline-flex items-center gap-2 px-4 py-2 text-[8px] sm:text-sm rounded-lg border border-input bg-background hover:bg-accent hover:text-accent-foreground transition-colors"
+          class="inline-flex items-center gap-2 px-4 py-2 text-[8px] sm:text-sm rounded-lg border border-input bg-background hover:bg-accent hover:text-accent-foreground transition-colors min-h-[44px]"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -89,29 +96,53 @@ const projects = [
                     ))}
                   </div>
 
-                  <div class="flex gap-3 pt-2">
-                    <a
-                      href={project.link}
-                      class="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
-                      target= _blank
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="16"
-                        height="16"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                  <div class="pt-2">
+                    {project.access === "public" ? (
+                      <a
+                        href={project.link}
+                        class="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+                        target="_blank"
+                      rel="noopener noreferrer"
                       >
-                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                        <polyline points="15 3 21 3 21 9" />
-                        <line x1="10" y1="14" x2="21" y2="3" />
-                      </svg>
-                      View Project
-                    </a>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                          <polyline points="15 3 21 3 21 9" />
+                          <line x1="10" y1="14" x2="21" y2="3" />
+                        </svg>
+                        View Project
+                      </a>
+                    ) : (
+                      <a
+                        href={`mailto:edric.ramilo191@gmail.com?subject=Requesting access to ${encodeURIComponent(project.title)}`}
+                        class="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg border border-input bg-background hover:bg-accent hover:text-accent-foreground transition-colors"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path d="M4 4h16v12H5.17L4 17.17V4Z" />
+                          <path d="m4 4 8 6 8-6" />
+                        </svg>
+                        Request access
+                      </a>
+                    )}
                   </div>
                 </div>
               </Card>
