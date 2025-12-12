@@ -4,12 +4,12 @@ import InteractiveBackground from "../components/InteractiveBackground.astro";
 import Analytics from "@vercel/analytics/astro";
 
 const {
-  title = "Edric Ramilo | Aspiring Cloud Engineer",
-  description = "Portfolio of Edric Ramilo, an aspiring cloud engineer focused on AWS, full-stack development, and resilient systems.",
-  image = "/Avatar.jpg",
+  title = "Edric Russell Ramilo | Aspiring Cloud Engineer",
+  description = "Portfolio of Edric Russell Ramilo, an aspiring cloud engineer focused on AWS, full-stack development, and resilient systems.",
+  image = "/Avatar.jpg",  
 } = Astro.props;
 
-const site = Astro.site ?? "https://Ramilo-Edric03.github.io";
+const site = Astro.site ?? "https://edric-ramilo.dev";
 const canonical = new URL(Astro.url.pathname, site);
 const ogImage =
   typeof image === "string" && image.startsWith("http")
@@ -22,7 +22,7 @@ const ogImage =
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -34,13 +34,20 @@ const ogImage =
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical.toString()} />
+    <meta name="author" content="Edric Russell Ramilo" />
+    <meta name="keywords" content="Edric Russell Ramilo, Aspiring Cloud Engineer, Cloud Engineer, Full-stack Developer, Resilient Systems, AWS, Next.js, React, TypeScript, Tailwind CSS, Supabase, Node.js, Express.js" />
 
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical.toString()} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
-
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={title} />
+    <meta property="og:site_name" content="Edric Russell Ramilo Portfolio" />
+    <meta property="og:locale" content="en_US" />
+   
     <Analytics />
   </head>
   <body

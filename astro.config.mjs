@@ -2,12 +2,13 @@
 import { defineConfig } from 'astro/config';
 import tailwindcss from "@tailwindcss/vite";
 import react from '@astrojs/react';
+import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://Ramilo-Edric03.github.io',
+  site: 'https://edric-ramilo.dev',
   output: 'static',
 
-  integrations: [react()],
+  integrations: [react(), sitemap()],
   
   vite: {
     plugins: [tailwindcss()],
