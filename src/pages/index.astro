@@ -24,7 +24,7 @@ const experience = [
     role: "Student Assistant",
     company: "FAITH Colleges",
     year: "2025",
-    current: true,
+    current: false,
   },
 ];
 
@@ -415,7 +415,7 @@ const getTechIcon = (tech: string) => {
                   <span
                     class={cn(
                       "absolute -left-[5px] top-1.5 h-2.5 w-2.5 rounded-full border border-background",
-                      job.current ? "bg-primary" : "bg-muted-foreground/30"
+                      job.current ? "bg-primary" : "bg-muted-foreground/30",
                     )}
                   />
                   <div class="flex flex-col gap-0.5">
@@ -478,6 +478,18 @@ const getTechIcon = (tech: string) => {
             >
               <span class="font-medium">AWS Certified Cloud Practitioner</span>
               <span class="text-muted-foreground">2025</span>
+            </a>
+          </li>
+          <li class="flex items-center justify-between text-sm">
+            <a
+              href="https://www.credly.com/badges/a312ea48-a993-456f-ab6e-f42f686c6961/public_url"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Go to Credly to view my certification"
+              class="flex items-center justify-between text-[12px] gap-12.5 hover:text-primary ease-in-out duration-300"
+            >
+              <span class="font-medium">IT Specialist - Cloud Computing</span>
+              <span class="text-muted-foreground">2026</span>
             </a>
           </li>
         </ul>
