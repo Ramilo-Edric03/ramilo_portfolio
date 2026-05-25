@@ -16,27 +16,27 @@ const Component = href ? "a" : "div";
 <Component
   href={href}
   class={cn(
-    "group relative flex flex-col overflow-hidden rounded-xl border border-border bg-card text-card-foreground shadow-sm transition-all hover:shadow-md hover-lift",
-    href && "hover:border-primary/50 hover:bg-accent/5",
+    "group relative flex flex-col overflow-hidden rounded-md border border-border bg-card text-card-foreground transition-all hover-lift",
+    href && "hover:border-primary hover:bg-secondary/25 cursor-pointer",
     className
   )}
 >
   {
     title && (
-      <div class="flex items-center justify-between border-b border-border px-4 py-3 bg-muted/20">
-        <div class="flex items-center gap-2">
+      <div class="flex items-center justify-between border-b border-border px-4 py-2.5 bg-secondary/20">
+        <div class="flex items-center gap-2 text-foreground/90 font-display">
           <slot name="icon" />
-          <h3 class="font-semibold tracking-tight text-sm">{title}</h3>
+          <h3 class="font-bold tracking-wider text-xs uppercase">{title}</h3>
         </div>
         {href && (
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
+            width="14"
+            height="14"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            stroke-width="2"
+            stroke-width="2.5"
             stroke-linecap="round"
             stroke-linejoin="round"
             class="text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
@@ -48,7 +48,7 @@ const Component = href ? "a" : "div";
       </div>
     )
   }
-  <div class={cn("flex-1", !noPadding && "p-4")}>
+  <div class={cn("flex-1", !noPadding && "p-5")}>
     <slot />
   </div>
 </Component>
