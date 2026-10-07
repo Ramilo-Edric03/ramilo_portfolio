@@ -1,0 +1,325 @@
+---
+import type { ProjectImage } from "../data/projects";
+
+interface Props {
+  images?: ProjectImage[];
+  projectTitle: string;
+}
+
+const { images = [], projectTitle } = Astro.props;
+const hasImages = images.length > 0;
+const galleryId = `gallery-${Math.random().toString(36).slice(2, 9)}`;
+---
+
+<div class="space-y-3" id={galleryId} data-gallery-id={galleryId}>
+  {hasImages && (
+    <div class="space-y-2">
+      <div class="relative border border-white/10 bg-zinc-950 overflow-hidden group">
+        <div class="relative w-full aspect-video flex items-center justify-center bg-black/60 overflow-hidden">
+          <img
+            id={`${galleryId}-main-img`}
+            src={images[0].src}
+            alt={images[0].alt || `${projectTitle} preview`}
+            class="w-full h-full object-contain transition-opacity duration-200 cursor-zoom-in"
+            loading="lazy"
+          />
+
+          <button
+            type="button"
+            id={`${galleryId}-expand`}
+            class="absolute top-2.5 right-2.5 z-10 flex items-center gap-1.5 px-2.5 py-1 bg-black/80 hover:bg-black border border-white/15 hover:border-white/30 text-zinc-300 hover:text-white font-mono text-xs transition-all cursor-pointer"
+            aria-label="Open full screen view"
+            title="Full screen view"
+          >
+            <span>⤢</span>
+            <span class="hidden sm:inline">Full screen</span>
+          </button>
+        </div>
+
+        {images.length > 1 && (
+          <div class="absolute inset-y-0 inset-x-0 flex items-center justify-between p-2 pointer-events-none">
+            <button
+              type="button"
+              id={`${galleryId}-prev`}
+              class="pointer-events-auto h-8 w-8 flex items-center justify-center bg-black/80 border border-white/15 text-zinc-300 hover:text-white hover:border-white/30 transition-all font-mono text-sm cursor-pointer"
+              aria-label="Previous image"
+            >
+              ←
+            </button>
+            <button
+              type="button"
+              id={`${galleryId}-next`}
+              class="pointer-events-auto h-8 w-8 flex items-center justify-center bg-black/80 border border-white/15 text-zinc-300 hover:text-white hover:border-white/30 transition-all font-mono text-sm cursor-pointer"
+              aria-label="Next image"
+            >
+              →
+            </button>
+          </div>
+        )}
+      </div>
+
+      <div class="flex items-center justify-between gap-4 font-mono text-xs text-zinc-400 px-1">
+        <p id={`${galleryId}-caption`} class="font-sans text-xs text-zinc-400 truncate">
+          {images[0].caption || images[0].alt || ""}
+        </p>
+
+        {images.length > 1 && (
+          <span id={`${galleryId}-counter`} class="shrink-0 text-zinc-500 font-mono text-xs">
+            01 / {images.length.toString().padStart(2, "0")}
+          </span>
+        )}
+      </div>
+
+      {images.length > 1 && (
+        <div class="flex items-center gap-2 overflow-x-auto pt-1 pb-1" role="tablist">
+          {images.map((img, idx) => (
+            <button
+              type="button"
+              data-gallery-index={idx}
+              class:list={[
+                "gallery-thumb relative w-16 h-11 sm:w-20 sm:h-13 shrink-0 border transition-all overflow-hidden bg-black focus:outline-none cursor-pointer",
+                idx === 0 ? "border-white opacity-100" : "border-white/15 opacity-50 hover:opacity-80",
+              ]}
+              aria-label={`View image ${idx + 1}`}
+            >
+              <img
+                src={img.src}
+                alt={img.alt || ""}
+                class="w-full h-full object-cover"
+                loading="lazy"
+              />
+            </button>
+          ))}
+        </div>
+      )}
+
+      <dialog
+        id={`${galleryId}-dialog`}
+        class="fixed inset-0 m-0 p-4 sm:p-6 w-screen h-screen max-w-none max-h-none bg-black/95 text-white border-0 outline-none z-50 flex flex-col justify-between items-center"
+        aria-label={`${projectTitle} full screen preview`}
+      >
+        <div class="w-full flex items-center justify-between gap-4 font-mono text-xs text-zinc-400 max-w-6xl mx-auto shrink-0">
+          <div class="flex items-center gap-2 min-w-0">
+            <span class="text-white font-bold truncate">{projectTitle}</span>
+            <span class="text-zinc-600 shrink-0">/</span>
+            <span id={`${galleryId}-dialog-caption`} class="truncate text-zinc-400">
+              {images[0].caption || images[0].alt || ""}
+            </span>
+          </div>
+          <div class="flex items-center gap-3 shrink-0">
+            {images.length > 1 && (
+              <span id={`${galleryId}-dialog-counter`} class="text-zinc-500 font-mono">
+                01 / {images.length.toString().padStart(2, "0")}
+              </span>
+            )}
+            <button
+              type="button"
+              id={`${galleryId}-close`}
+              class="px-2.5 py-1 border border-white/20 bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-white hover:border-white/40 font-mono text-xs transition-colors flex items-center gap-1.5 cursor-pointer"
+              aria-label="Close full screen view"
+            >
+              <span>✕</span>
+              <span>Close</span>
+            </button>
+          </div>
+        </div>
+
+        <div
+          id={`${galleryId}-dialog-stage`}
+          class="relative w-full flex-1 flex items-center justify-center min-h-0 my-3 cursor-zoom-out"
+        >
+          <img
+            id={`${galleryId}-dialog-img`}
+            src={images[0].src}
+            alt={images[0].alt || `${projectTitle} preview`}
+            class="max-w-full max-h-full object-contain select-none cursor-default"
+          />
+
+          {images.length > 1 && (
+            <div class="absolute inset-y-0 inset-x-0 flex items-center justify-between pointer-events-none px-2 sm:px-4">
+              <button
+                type="button"
+                id={`${galleryId}-dialog-prev`}
+                class="pointer-events-auto h-10 w-10 flex items-center justify-center bg-black/80 border border-white/15 text-zinc-300 hover:text-white hover:border-white/30 transition-all font-mono text-base cursor-pointer"
+                aria-label="Previous image"
+              >
+                ←
+              </button>
+              <button
+                type="button"
+                id={`${galleryId}-dialog-next`}
+                class="pointer-events-auto h-10 w-10 flex items-center justify-center bg-black/80 border border-white/15 text-zinc-300 hover:text-white hover:border-white/30 transition-all font-mono text-base cursor-pointer"
+                aria-label="Next image"
+              >
+                →
+              </button>
+            </div>
+          )}
+        </div>
+
+        <div class="w-full flex items-center justify-between text-zinc-500 font-mono text-[11px] max-w-6xl mx-auto shrink-0">
+          <span class="hidden sm:inline">Press Esc or click backdrop to close</span>
+          {images.length > 1 && <span class="hidden sm:inline">Use ← / → keys to navigate</span>}
+        </div>
+      </dialog>
+    </div>
+  )}
+
+  {!hasImages && (
+    <div class="border border-dashed border-white/15 bg-zinc-950/40 p-8 sm:p-12 flex flex-col items-center justify-center text-center gap-2 aspect-video">
+      <div class="font-mono text-xs text-zinc-500 uppercase tracking-wider">
+        [ Gallery preview ]
+      </div>
+      <p class="text-xs text-zinc-400 font-sans">
+        Screenshots and architecture diagrams can be added in <code class="font-mono text-zinc-300">src/data/projects.ts</code>
+      </p>
+    </div>
+  )}
+</div>
+
+<style>
+  dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.92);
+    backdrop-filter: blur(4px);
+  }
+  dialog:not([open]) {
+    display: none;
+  }
+</style>
+
+<script define:vars={{ galleryId, images }}>
+  if (images && images.length > 0) {
+    const container = document.getElementById(galleryId);
+    if (container) {
+      const mainImg = document.getElementById(`${galleryId}-main-img`);
+      const captionEl = document.getElementById(`${galleryId}-caption`);
+      const counterEl = document.getElementById(`${galleryId}-counter`);
+      const prevBtn = document.getElementById(`${galleryId}-prev`);
+      const nextBtn = document.getElementById(`${galleryId}-next`);
+      const expandBtn = document.getElementById(`${galleryId}-expand`);
+      const thumbs = container.querySelectorAll(".gallery-thumb");
+
+      const dialog = document.getElementById(`${galleryId}-dialog`);
+      const dialogImg = document.getElementById(`${galleryId}-dialog-img`);
+      const dialogCaption = document.getElementById(`${galleryId}-dialog-caption`);
+      const dialogCounter = document.getElementById(`${galleryId}-dialog-counter`);
+      const dialogClose = document.getElementById(`${galleryId}-close`);
+      const dialogStage = document.getElementById(`${galleryId}-dialog-stage`);
+      const dialogPrev = document.getElementById(`${galleryId}-dialog-prev`);
+      const dialogNext = document.getElementById(`${galleryId}-dialog-next`);
+
+      let currentIndex = 0;
+
+      function setIndex(index) {
+        currentIndex = (index + images.length) % images.length;
+        const current = images[currentIndex];
+
+        if (mainImg) {
+          mainImg.style.opacity = "0.4";
+          setTimeout(() => {
+            mainImg.src = current.src;
+            mainImg.alt = current.alt || "";
+            mainImg.style.opacity = "1";
+          }, 100);
+        }
+
+        if (captionEl) {
+          captionEl.textContent = current.caption || current.alt || "";
+        }
+
+        const currentStr = (currentIndex + 1).toString().padStart(2, "0");
+        const totalStr = images.length.toString().padStart(2, "0");
+
+        if (counterEl) {
+          counterEl.textContent = `${currentStr} / ${totalStr}`;
+        }
+
+        if (dialogImg) {
+          dialogImg.src = current.src;
+          dialogImg.alt = current.alt || "";
+        }
+        if (dialogCaption) {
+          dialogCaption.textContent = current.caption || current.alt || "";
+        }
+        if (dialogCounter) {
+          dialogCounter.textContent = `${currentStr} / ${totalStr}`;
+        }
+
+        thumbs.forEach((thumb, idx) => {
+          if (idx === currentIndex) {
+            thumb.classList.add("border-white", "opacity-100");
+            thumb.classList.remove("border-white/15", "opacity-50");
+          } else {
+            thumb.classList.remove("border-white", "opacity-100");
+            thumb.classList.add("border-white/15", "opacity-50");
+          }
+        });
+      }
+
+      function openModal() {
+        if (!dialog) return;
+        setIndex(currentIndex);
+        document.body.style.overflow = "hidden";
+        dialog.showModal();
+      }
+
+      function closeModal() {
+        if (!dialog) return;
+        dialog.close();
+      }
+
+      if (mainImg) mainImg.addEventListener("click", openModal);
+      if (expandBtn) expandBtn.addEventListener("click", openModal);
+      if (dialogClose) dialogClose.addEventListener("click", closeModal);
+
+      if (dialog) {
+        dialog.addEventListener("close", () => {
+          document.body.style.overflow = "";
+        });
+        dialog.addEventListener("click", (e) => {
+          if (e.target === dialog || e.target === dialogStage) {
+            closeModal();
+          }
+        });
+        dialog.addEventListener("keydown", (e) => {
+          if (images.length > 1) {
+            if (e.key === "ArrowLeft") setIndex(currentIndex - 1);
+            if (e.key === "ArrowRight") setIndex(currentIndex + 1);
+          }
+        });
+      }
+
+      if (prevBtn) {
+        prevBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          setIndex(currentIndex - 1);
+        });
+      }
+
+      if (nextBtn) {
+        nextBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          setIndex(currentIndex + 1);
+        });
+      }
+
+      if (dialogPrev) {
+        dialogPrev.addEventListener("click", (e) => {
+          e.stopPropagation();
+          setIndex(currentIndex - 1);
+        });
+      }
+
+      if (dialogNext) {
+        dialogNext.addEventListener("click", (e) => {
+          e.stopPropagation();
+          setIndex(currentIndex + 1);
+        });
+      }
+
+      thumbs.forEach((thumb, idx) => {
+        thumb.addEventListener("click", () => setIndex(idx));
+      });
+    }
+  }
+</script>
