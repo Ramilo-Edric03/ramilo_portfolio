@@ -1,0 +1,67 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import { projects } from "../../data/projects";
+---
+
+<Layout
+  title="Projects | Edric Russell Ramilo"
+  description="Cloud infrastructure, serverless apps, and web applications by Edric Russell Ramilo."
+>
+  <Header currentPath="/projects" />
+
+  <main
+    class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 space-y-10"
+  >
+    <header class="space-y-2 border-b border-white/10 pb-6">
+      <h1 class="font-display font-bold text-3xl text-white tracking-tight">
+        Projects
+      </h1>
+      <p class="text-sm text-zinc-400 font-sans">
+        Selected software projects. Click a project to view its case study, user
+        flow, and architecture.
+      </p>
+    </header>
+
+    <div class="divide-y divide-white/10 border-y border-white/10" role="list">
+      {
+        projects.map((project) => (
+          <a
+            href={`/projects/${project.slug}`}
+            class="group flex flex-col sm:flex-row sm:items-center justify-between gap-3 py-5 hover:bg-white/[0.02] px-3 -mx-3 transition-colors"
+          >
+            <div class="space-y-1 min-w-0">
+              <div class="flex items-center gap-2.5 font-mono text-xs text-zinc-500">
+                <span class="text-zinc-400">{project.category}</span>
+              </div>
+              <h2 class="font-display font-bold text-lg text-white group-hover:text-zinc-200 transition-colors">
+                {project.title}
+              </h2>
+              <p class="text-xs sm:text-sm text-zinc-400 font-sans line-clamp-1">
+                {project.summary}
+              </p>
+            </div>
+
+            <div class="flex items-center gap-2 text-xs font-mono text-zinc-400 group-hover:text-white shrink-0 self-start sm:self-center transition-colors">
+              <span>More Info</span>
+              <span class="group-hover:translate-x-0.5 transition-transform">
+                →
+              </span>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+
+    <div class="pt-4 font-mono text-xs">
+      <a
+        href="/"
+        class="text-zinc-400 hover:text-white transition-colors inline-flex items-center gap-1.5"
+      >
+        <span>←</span>
+        <span>Back to home</span>
+      </a>
+    </div>
+  </main>
+</Layout>

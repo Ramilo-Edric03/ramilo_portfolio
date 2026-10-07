@@ -1,12 +1,13 @@
 ---
 import "../styles/global.css";
-import InteractiveBackground from "../components/InteractiveBackground.astro";
 import Analytics from "@vercel/analytics/astro";
+import ClickSpark from "../components/ui/react-bits/ClickSpark";
+import SmoothScroll from "../components/SmoothScroll.astro";
 
 const {
   title = "Edric Russell Ramilo | Aspiring Cloud Engineer",
   description = "Portfolio of Edric Russell Ramilo, an aspiring cloud engineer focused on AWS, full-stack development, and resilient systems.",
-  image = "/Avatar.jpg",  
+  image = "/Avatar.jpg",
 } = Astro.props;
 
 const site = Astro.site ?? "https://edric-ramilo.dev";
@@ -18,7 +19,7 @@ const ogImage =
 ---
 
 <!doctype html>
-<html lang="en" class="dark">
+<html lang="en" class="dark bg-black">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
@@ -35,7 +36,10 @@ const ogImage =
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical.toString()} />
     <meta name="author" content="Edric Russell Ramilo" />
-    <meta name="keywords" content="Edric Russell Ramilo, Aspiring Cloud Engineer, Cloud Engineer, Full-stack Developer, Resilient Systems, AWS, Next.js, React, TypeScript, Tailwind CSS, Supabase, Node.js, Express.js" />
+    <meta
+      name="keywords"
+      content="Edric Russell Ramilo, Aspiring Cloud Engineer, Cloud Engineer, Full-stack Developer, Resilient Systems, AWS, Next.js, React, TypeScript, Tailwind CSS, Supabase, Node.js, Express.js"
+    />
 
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical.toString()} />
@@ -47,13 +51,22 @@ const ogImage =
     <meta property="og:image:alt" content={title} />
     <meta property="og:site_name" content="Edric Russell Ramilo Portfolio" />
     <meta property="og:locale" content="en_US" />
-    
-   <Analytics />
+
+    <Analytics />
   </head>
   <body
-    class="bg-background text-foreground font-sans antialiased selection:bg-primary selection:text-primary-foreground bg-dots"
+    class="bg-black text-foreground font-sans antialiased selection:bg-primary selection:text-primary-foreground min-h-screen"
   >
-    <InteractiveBackground />
-    <slot />
+    <SmoothScroll />
+    <ClickSpark
+      client:load
+      sparkColor="#fff"
+      sparkSize={8}
+      sparkRadius={20}
+      sparkCount={9}
+      duration={400}
+    >
+      <slot />
+    </ClickSpark>
   </body>
 </html>

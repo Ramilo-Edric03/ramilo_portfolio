@@ -1,674 +1,977 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Card from "../components/Card.astro";
-import Badge from "../components/Badge.astro";
-import { cn } from "../lib/utils";
-import {
-  siReact,
-  siNextdotjs,
-  siTypescript,
-  siTailwindcss,
-  siSupabase,
-  siNodedotjs,
-  siExpress,
-} from "simple-icons";
-import Image from "astro/components/Image.astro";
+import Header from "../components/Header.astro";
+import DitherVeil from "../components/ui/react-bits/DitherVeil";
+import TechText from "../components/ui/react-bits/TechText";
+import BorderGlow from "../components/ui/react-bits/BorderGlow";
+import ASCIIText from "../components/ui/react-bits/ASCIIText";
+import AwsLogo from "../components/icons/AwsLogo.astro";
+import PearsonLogo from "../components/icons/PearsonLogo.astro";
+import { ArchGallery } from "../components/ui/first-dev/arch-gallery";
 
-const experience = [
+// Experience Milestones
+const experienceMilestones = [
   {
-    role: "Job Hunting",
-    company: "Home",
-    year: "2026",
-    current: true,
+    period: "May 2026 to present",
+    role: "Studying & Job Hunting",
+    organization: "Remote",
+    status: "Current",
+    logo: null,
+    logoAlt: null,
+    highlights: ["Reviewing logic, system design, and web development."],
   },
   {
-    role: "Software Engineering Intern",
-    company: "Snapp Ventures Inc.",
-    year: "2026",
-    current: false,
+    period: "January 2026 to May 2026",
+    role: "Software engineering intern",
+    organization: "Snapp Ventures Inc.",
+    status: "Completed",
+    logo: "/Snapp_ventures-svg.svg",
+    logoAlt: "Snapp Ventures Inc. logo",
+    highlights: [
+      "Tested releases across frontend and backend services to verify data flow before deployment.",
+      "Wrote and executed more than 60 manual test cases, then used Playwright to automate end-to-end regression tests.",
+      "Created 7 database collections and 8 automated flows in Directus CMS to review and approve leave requests.",
+      "Built OpenKitchen, an internal tool that translates plain text prompts into Playwright browser workflows.",
+    ],
   },
   {
-    role: "Student Assistant",
-    company: "FAITH Colleges",
-    year: "2025",
-    current: false,
-  },
-  {
-    role: "Hello World",
-    company: "Start of my Tech Journey",
-    year: "2022",
-    current: false,
+    period: "September 2024 to July 2025",
+    role: "Student assistant",
+    organization: "FAITH Colleges",
+    status: "Completed",
+    logo: "/faith_colleges-logo.png",
+    logoAlt: "FAITH Colleges logo",
+    highlights: [
+      "Coordinated academic operations between department faculty and the admissions office.",
+      "Digitized departmental student records so staff could locate files faster.",
+      "Assisted student services during campus events with equipment setup and student coordination.",
+    ],
   },
 ];
 
-const projects = [
+// Featured Projects (Minimal for Home Page)
+const flagshipProjects = [
   {
+    id: "01",
+    title: "AWS Web App Architecture Design",
+    summary:
+      "Production-ready AWS infrastructure specification designed for high availability and fault tolerance. Distributes compute traffic across two availability zones using public load balancers, auto-scaling private EC2 fleets, and isolated RDS database subnets.",
+    href: "/projects/aws-web-architecture",
+  },
+  {
+    id: "02",
+    title: "Share-Your-Secret",
+    summary:
+      "Zero-knowledge secret-sharing web application built on AWS serverless primitives. Encrypts sensitive credentials in the browser using the Web Crypto API with AES-256-GCM before transport, storing ciphertext in DynamoDB with single-read destruction and automated 24-hour TTL expiration.",
+    href: "/projects/share-your-secret",
+  },
+  {
+    id: "03",
     title: "OpenKitchen",
-    desc: "a browser automation platform using to convert natural language prompts into structured automation workflows.",
-    link: "/projects",
-    tag: "Playwright",
-  },
-  {
-    title: "RespoBilis",
-    desc: "A disaster coordination system mapping real-time resource routing and status in Tanauan City.",
-    link: "/projects",
-    tag: "Next.js",
+    summary:
+      "Internal operations platform developed at Snapp Ventures to replace repetitive manual web scraping workflows. Translates plain English instructions into structured JSON execution steps via the Gemini API, drives browser automation in Playwright, and exports formatted tables to Excel via ExcelJS.",
+    href: "/projects/openkitchen",
   },
 ];
 
-const techStack = {
-  Frontend: ["React", "Next.js", "TypeScript", "Tailwind CSS"],
-  Backend: ["Supabase", "Node.js", "Express.js"],
-  Cloud: ["AWS"],
-  QA: ["Playwright"],
-};
+// Verified Certifications
+const certifications = [
+  {
+    id: "aws",
+    title: "AWS Certified Cloud Practitioner",
+    issuer: "Amazon Web Services",
+    year: "2025",
+    badgeUrl:
+      "https://www.credly.com/badges/de4b2160-0dd5-4ef0-9c2d-f880cbbc813e/public_url",
+    badgeId: "de4b2160-0dd5-4ef0-9c2d-f880cbbc813e",
+    pillars: [
+      "Cloud concepts and security models",
+      "Core AWS services including IAM, EC2, S3, and RDS",
+      "Billing, pricing, and account management",
+    ],
+  },
+  {
+    id: "pearson",
+    title: "Certiport IT Specialist: Cloud Computing",
+    issuer: "Certiport, Pearson VUE",
+    year: "2026",
+    badgeUrl:
+      "https://www.credly.com/badges/a312ea48-a993-456f-ab6e-f42f686c6961/public_url",
+    badgeId: "a312ea48-a993-456f-ab6e-f42f686c6961",
+    pillars: [
+      "Cloud architecture and delivery models",
+      "Storage, compute, and networking fundamentals",
+      "Cloud security and compliance",
+    ],
+  },
+];
 
-const techIcons: Record<string, typeof siReact> = {
-  React: siReact,
-  "Next.js": siNextdotjs,
-  TypeScript: siTypescript,
-  "Tailwind CSS": siTailwindcss,
-  Supabase: siSupabase,
-  "Node.js": siNodedotjs,
-  "Express.js": siExpress,
-};
+// Technical Skill Matrix
+const skillDomains = [
+  {
+    domain: "Cloud",
+    skills: ["AWS IAM, EC2, S3, Lambda", "VPC, DynamoDB, RDS", "Amplify"],
+  },
+  {
+    domain: "Programming languages",
+    skills: ["TypeScript", "JavaScript", "Python", "SQL", "HTML and CSS"],
+  },
+  {
+    domain: "Frontend and Backend",
+    skills: [
+      "Next.js",
+      "React",
+      "Node.js and Express",
+      "Supabase PostgreSQL",
+      "MySQL",
+    ],
+  },
+  {
+    domain: "QA, automation, and tools",
+    skills: ["Playwright", "Google Gemini API", "Git and GitHub", "Linux"],
+  },
+];
 
-const getTechIcon = (tech: string) => {
-  if (tech === "AWS") {
-    return `<svg width="14" height="14" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="none"><g fill="currentColor"><path d="M4.51 7.687c0 .197.02.357.058.475.042.117.096.245.17.384a.233.233 0 01.037.123c0 .053-.032.107-.1.16l-.336.224a.255.255 0 01-.138.048c-.054 0-.107-.026-.16-.074a1.652 1.652 0 01-.192-.251 4.137 4.137 0 01-.164-.315c-.416.491-.937.737-1.565.737-.447 0-.804-.129-1.064-.385-.261-.256-.394-.598-.394-1.025 0-.454.16-.822.484-1.1.325-.278.756-.416 1.304-.416.18 0 .367.016.564.042.197.027.4.07.612.118v-.39c0-.406-.085-.689-.25-.854-.17-.166-.458-.246-.868-.246-.186 0-.377.022-.574.07a4.23 4.23 0 00-.575.181 1.525 1.525 0 01-.186.07.326.326 0 01-.085.016c-.075 0-.112-.054-.112-.166v-.262c0-.085.01-.15.037-.186a.399.399 0 01.15-.113c.185-.096.409-.176.67-.24.26-.07.537-.101.83-.101.633 0 1.096.144 1.394.432.293.288.442.726.442 1.314v1.73h.01zm-2.161.811c.175 0 .356-.032.548-.096.192-.064.362-.182.505-.342a.848.848 0 00.181-.341c.032-.129.054-.283.054-.465V7.03a4.43 4.43 0 00-.49-.09 3.996 3.996 0 00-.5-.033c-.357 0-.617.07-.793.214-.176.144-.26.347-.26.614 0 .25.063.437.196.566.128.133.314.197.559.197zm4.273.577c-.096 0-.16-.016-.202-.054-.043-.032-.08-.106-.112-.208l-1.25-4.127a.938.938 0 01-.048-.214c0-.085.042-.133.127-.133h.522c.1 0 .17.016.207.053.043.032.075.107.107.208l.894 3.535.83-3.535c.026-.106.058-.176.101-.208a.365.365 0 01.213-.053h.426c.1 0 .17.016.212.053.043.032.08.107.102.208l.84 3.578.92-3.578a.459.459 0 01.107-.208.347.347 0 01.208-.053h.495c.085 0 .133.043.133.133 0 .027-.006.054-.01.086a.768.768 0 01-.038.133l-1.283 4.127c-.031.107-.069.177-.111.209a.34.34 0 01-.203.053h-.457c-.101 0-.17-.016-.213-.053-.043-.038-.08-.107-.101-.214L8.213 5.37l-.82 3.439c-.026.107-.058.176-.1.213-.043.038-.118.054-.213.054h-.458zm6.838.144a3.51 3.51 0 01-.82-.096c-.266-.064-.473-.134-.612-.214-.085-.048-.143-.101-.165-.15a.38.38 0 01-.031-.149v-.272c0-.112.042-.166.122-.166a.3.3 0 01.096.016c.032.011.08.032.133.054.18.08.378.144.585.187.213.042.42.064.633.064.336 0 .596-.059.777-.176a.575.575 0 00.277-.508.52.52 0 00-.144-.373c-.095-.102-.276-.193-.537-.278l-.772-.24c-.388-.123-.676-.305-.851-.545a1.275 1.275 0 01-.266-.774c0-.224.048-.422.143-.593.096-.17.224-.32.384-.438.16-.122.34-.213.553-.277.213-.064.436-.091.67-.091.118 0 .24.005.357.021.122.016.234.038.346.06.106.026.208.052.303.085.096.032.17.064.224.096a.461.461 0 01.16.133.289.289 0 01.047.176v.251c0 .112-.042.171-.122.171a.552.552 0 01-.202-.064 2.428 2.428 0 00-1.022-.208c-.303 0-.543.048-.708.15-.165.1-.25.256-.25.475 0 .149.053.277.16.379.106.101.303.202.585.293l.756.24c.383.123.66.294.825.513.165.219.244.47.244.748 0 .23-.047.437-.138.619a1.435 1.435 0 01-.388.47c-.165.133-.362.23-.591.299-.24.075-.49.112-.761.112z"></path><path fill-rule="evenodd" d="M14.465 11.813c-1.75 1.297-4.294 1.986-6.481 1.986-3.065 0-5.827-1.137-7.913-3.027-.165-.15-.016-.353.18-.235 2.257 1.313 5.04 2.109 7.92 2.109 1.941 0 4.075-.406 6.039-1.239.293-.133.543.192.255.406z" clip-rule="evenodd"></path><path fill-rule="evenodd" d="M15.194 10.98c-.223-.287-1.479-.138-2.048-.069-.17.022-.197-.128-.043-.24 1-.705 2.645-.502 2.836-.267.192.24-.053 1.89-.99 2.68-.143.123-.281.06-.217-.1.212-.53.686-1.72.462-2.003z" clip-rule="evenodd"></path></g></svg>`;
-  }
-
-  if (tech === "Playwright") {
-    return `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" id="Playwright--Streamline-Svg-Logos" height="14" width="14">
-  <path fill="#ffffff" d="M7.99585 13.141725c-0.87725 0.248975 -1.452775 0.685475 -1.8319 1.12165 0.363125 -0.317775 0.849525 -0.609425 1.505675 -0.795425 0.6711 -0.1902 1.243625 -0.188825 1.7167 -0.09755v-0.369925c-0.40355 -0.0369 -0.866225 -0.0075 -1.390475 0.14125Zm-1.872 -3.109775 -3.25795 0.858325s0.059375 0.083875 0.1693 0.195775l2.76235 -0.727875s-0.03915 0.5044 -0.379075 0.9556c0.643 -0.486475 0.705375 -1.281825 0.705375 -1.281825Zm2.727125 7.65675C4.26615 18.923575 1.8404825 13.61025 1.1060875 10.852425c-0.3393 -1.273 -0.487415 -2.2371 -0.5268925 -2.859275 -0.0042425 -0.0646 -0.0022825 -0.11905 0.002285 -0.16895 -0.237835 0.01435 -0.3517015 0.137975 -0.328535 0.49525 0.0394775 0.621825 0.187595 1.585875 0.526895 2.859275C1.5139075 13.936125 3.9399 19.24945 8.52475 18.0146c0.99795 -0.26885 1.747675 -0.758525 2.310475 -1.383625 -0.51875 0.468525 -1.168 0.8375 -1.98425 1.057725Zm0.861575 -10.90855v0.3263h1.79835c-0.0369 -0.115525 -0.074075 -0.219625 -0.110975 -0.3263h-1.687375Z" stroke-width="0.25"></path>
-  <path fill="#ffffff" d="M11.9129 9.46735c0.80875 0.229675 1.2365 0.7967 1.462575 1.2985l0.90175 0.2561s-0.123 -1.756175 -1.711525 -2.2074c-1.486075 -0.422225 -2.400575 0.8257 -2.5118 0.9872 0.4323 -0.308 1.063575 -0.56015 1.859 -0.3344Zm7.178175 1.3066c-1.487425 -0.424125 -2.401575 0.8264 -2.511175 0.985625 0.432625 -0.307625 1.063575 -0.559875 1.85865 -0.3331 0.80745 0.23005 1.23485 0.796375 1.461625 1.298525l0.90305 0.25705s-0.125 -1.756525 -1.71215 -2.2081Zm-0.8959 4.6305 -7.501475 -2.097125s0.0812 0.411725 0.3928 0.94485l6.3159 1.765675c0.519975 -0.30085 0.792775 -0.6134 0.792775 -0.6134ZM12.994375 19.918475C7.054675 18.326 7.77275 10.758025 8.733875 7.171825c0.395725 -1.4779 0.802575 -2.576375 1.13995 -3.312725 -0.2013 -0.041425 -0.368025 0.0646 -0.532775 0.39965 -0.358225 0.726575 -0.8163 1.90955 -1.259625 3.5656 -0.96085 3.586125 -1.67895 11.15385 4.2605 12.746325 2.79955 0.75 4.980475 -0.3899 6.60625 -2.18005 -1.543175 1.3977 -3.513425 2.181325 -5.9538 1.52785Z" stroke-width="0.25"></path>
-  <path fill="#ffffff" d="M9.7126 15.915175V14.388l-4.243175 1.2032s0.313525 -1.82175 2.526475 -2.4495c0.6711 -0.1902 1.2437 -0.1889 1.7167 -0.09755V6.780125h2.124575c-0.231325 -0.714825 -0.4551 -1.26515 -0.64305 -1.64755 -0.310925 -0.632925 -0.62965 -0.21335 -1.35325 0.39185 -0.50965 0.425775 -1.797675 1.33405 -3.7359 1.85635 -1.938275 0.522625 -3.50525 0.384025 -4.15906 0.2708 -0.9268825 -0.1599 -1.4116925 -0.36345 -1.3663375 0.34155 0.03947 0.621825 0.187595 1.58595 0.5268925 2.859275C1.8405325 13.609875 4.266525 18.9232 8.85135 17.68835c1.197625 -0.3227 2.04295 -0.960525 2.6289 -1.7735h-1.76765v0.000325ZM2.865625 10.89025l3.258275 -0.858325s-0.094975 1.25345 -1.31645 1.57545c-1.2218 0.321675 -1.941825 -0.717125 -1.941825 -0.717125Z" stroke-width="0.25"></path>
-  <path fill="#ffffff" d="M21.975075 6.8525c-0.84695 0.148475 -2.878875 0.33345 -5.389975 -0.339625 -2.5118 -0.672675 -4.17835 -1.849175 -4.838625 -2.402175 -0.936 -0.783975 -1.347725 -1.328825 -1.752925 -0.5047 -0.358225 0.726875 -0.816325 1.909875 -1.259725 3.565925 -0.960775 3.586125 -1.67885 11.15385 4.260525 12.7463 5.938125 1.591125 9.09945 -5.322175 10.0603 -8.908625 0.4434 -1.655725 0.637825 -2.9095 0.691325 -3.717925 0.061 -0.915775 -0.568025 -0.64995 -1.7709 -0.439175ZM10.0418 9.81945s0.936 -1.45575 2.523525 -1.00455c1.588525 0.451225 1.711525 2.207425 1.711525 2.207425l-4.23505 -1.202875ZM13.917 16.352c-2.79235 -0.817975 -3.223 -3.04465 -3.223 -3.04465l7.501125 2.0972c0 -0.00035 -1.5141 1.755175 -4.278125 0.94745Zm2.6521 -4.57605s0.9347 -1.45475 2.521925 -1.00225c1.587175 0.4519 1.71215 2.2081 1.71215 2.2081l-4.234075 -1.20585Z" stroke-width="0.25"></path>
-  <path fill="#ffffff" d="M8.2299 14.808525 5.4695 15.590875s0.29985 -1.708225 2.33335 -2.385175l-1.563075 -5.865975 -0.135075 0.04105c-1.93825 0.5227 -3.505225 0.384025 -4.15903 0.2708 -0.9268775 -0.159825 -1.411685 -0.36345 -1.3663375 0.341625 0.0394775 0.621825 0.187595 1.585875 0.5268925 2.85925 0.7340675 2.757425 3.160075 8.07075 7.744875 6.8359l0.135075 -0.042425 -0.756275 -2.8374ZM2.8657 10.8903l3.258275 -0.858375s-0.094975 1.25345 -1.316425 1.57545c-1.221825 0.321675 -1.94185 -0.717075 -1.94185 -0.717075Z" stroke-width="0.25"></path>
-  <path fill="#ffffff" d="m14.04295 16.382625 -0.1263 -0.0307c-2.792325 -0.8179 -3.223 -3.044575 -3.223 -3.044575l3.86805 1.0812 2.047825 -7.86915 -0.024775 -0.006525c-2.5118 -0.672675 -4.17825 -1.849175 -4.838625 -2.402175 -0.936 -0.783975 -1.347725 -1.328825 -1.752925 -0.5047 -0.357875 0.726875 -0.815975 1.909875 -1.259375 3.565925 -0.960775 3.586125 -1.67885 11.15385 4.260525 12.74625l0.121725 0.027425 0.926875 -3.562975ZM10.0418 9.819475s0.936 -1.455775 2.523525 -1.004575c1.588525 0.451225 1.711525 2.207425 1.711525 2.207425l-4.23505 -1.20285Z" stroke-width="0.25"></path>
-  <path fill="#ffffff" d="m8.37055 14.7683 -0.740275 0.2101c0.174875 0.9859 0.483125 1.93205 0.966975 2.7679 0.0842 -0.0186 0.167725 -0.034575 0.2535 -0.058075 0.2248 -0.06065 0.43325 -0.13575 0.63395 -0.21765 -0.5406 -0.802225 -0.898225 -1.726175 -1.11415 -2.702275Zm-0.289075 -6.9439c-0.3804 1.419825 -0.720725 3.46345 -0.62705 5.51325 0.167675 -0.072775 0.3448 -0.140575 0.54155 -0.1964l0.13705 -0.030625c-0.167075 -2.189525 0.194075 -4.4207 0.600925 -5.93875 0.103125 -0.384025 0.206525 -0.741225 0.3096 -1.07435 -0.166025 0.105675 -0.3448 0.213975 -0.548425 0.32555 -0.137325 0.42385 -0.276 0.887125 -0.41365 1.401325Z" stroke-width="0.25"></path>
-</svg>`;
-  }
-
-  const icon = techIcons[tech];
-  if (!icon) return "";
-  return `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="inline"><path d="${icon.path}" fill="currentColor"/></svg>`;
-};
+const currentYear = new Date().getFullYear();
 ---
 
 <Layout
-  title="Edric Russell Ramilo | Aspiring Cloud Engineer"
-  description="Portfolio showcasing projects, hands-on experience, and ways to collaborate with Edric Russell Ramilo."
-  image="/Avatar.jpg"
+  title="Edric Russell Ramilo | Cloud and Software Engineer"
+  description="Portfolio of Edric Russell Ramilo, software engineer with projects in AWS architecture, serverless apps, and browser automation."
 >
-  <main class="container mx-auto max-w-5xl p-6 md:p-12 space-y-8">
-    <nav class="flex justify-end border-b border-border pb-4">
-      <a
-        href="/projects"
-        class="inline-flex items-center gap-2 px-4 py-2 text-xs font-mono uppercase tracking-wider rounded-sm border border-border bg-card hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all hover-lift min-h-10"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="14"
-          height="14"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <path
-            d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"
-          ></path>
-        </svg>
-        Projects
-      </a>
-    </nav>
+  <Header currentPath="/" />
 
-    <!-- Headers -->
-    <section class="py-4 md:py-8 border-b border-white animate-fade-in">
-      <div class="flex flex-row items-start gap-4 md:gap-12">
-        <div class="relative shrink-0 animate-scale-in">
-          <Image
-            width="250"
-            height="250"
-            src="/Avatar.jpg"
-            alt="Edric Russell Ramilo"
-            loading="eager"
-            fetchpriority="high"
-            decoding="async"
-            class="w-32 h-32 sm:w-40 sm:h-40 md:w-44 md:h-44 rounded-sm object-cover border border-border"
+  <main class="w-full bg-black selection:bg-white selection:text-black">
+    <section
+      id="top"
+      class="min-h-[calc(100dvh-3rem)] lg:min-h-screen w-full flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8 py-8 sm:py-12 scroll-mt-5 lg:scroll-mt-0 relative snap-start"
+      aria-label="Introduction"
+    >
+      <div
+        class="max-w-4xl w-full flex flex-col items-center text-center space-y-6 sm:space-y-8 my-auto"
+      >
+        <h1 class="sr-only">Edric Russell Ramilo</h1>
+        <div
+          class="w-full h-16 sm:h-24 md:h-28 flex items-center justify-center"
+        >
+          <TechText
+            client:load
+            text="Edric Russell Ramilo"
+            fontFamily="Space Grotesk, sans-serif"
+            fontWeight={700}
+            fontSize={140}
+            color="#f4f4f5"
+            accentColor="#ffffff"
+            reach={180}
+            lineStyle="dashed"
+            reveal="letter"
+            specks={15}
+            selection={true}
+            labels={true}
+            draggable={true}
+            sweep={true}
+            speed={1}
+            className="w-full h-full z-[40]"
+            style={{}}
           />
         </div>
 
-        <!-- Header BOdy -->
-        <div class="flex-1 space-y-3 sm:space-y-4 w-full">
-          <div>
-            <h1
-              class="text-xl sm:text-4xl md:text-6xl font-black tracking-tighter uppercase font-display leading-none"
+        <div class="flex justify-center">
+          <div
+            style={{
+              width: "220px",
+              height: "220px",
+              maxWidth: "100%",
+              position: "relative",
+            }}
+            class="border border-white/15 bg-zinc-950 shadow-2xl"
+          >
+            <DitherVeil
+              client:load
+              src="/Avatar.jpg"
+              fit="cover"
+              pattern="lines"
+              pixelSize={2}
+              inkColor="#120f17"
+              paperColor="#f4f1ea"
+              revealRadius={80}
+              softness={0.5}
+              linger={1}
+              contrast={1.1}
+            />
+          </div>
+        </div>
+
+        <div class="space-y-2 max-w-xl mx-auto">
+          <p
+            class="text-sm sm:text-base text-zinc-300 font-sans leading-relaxed"
+          >
+            I'm a Software Engineer. I build web applications, serverless
+            backends, and practical AWS cloud infrastructure. Currently
+            upskilling in system design, cloud architecture, and full-stack
+            engineering.
+          </p>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-center gap-3 pt-1">
+          <a
+            href="#contact"
+            class="inline-flex items-center justify-center font-display text-xs font-semibold uppercase tracking-wider h-9 px-5 bg-white text-black hover:bg-zinc-200 transition-all border border-transparent rounded-none focus-visible:outline-ring"
+          >
+            Get in touch
+          </a>
+          <a
+            href="#projects"
+            class="inline-flex items-center justify-center font-display text-xs font-semibold uppercase tracking-wider h-9 px-5 bg-transparent text-white hover:bg-white/10 transition-all border border-white/20 rounded-none focus-visible:outline-ring"
+          >
+            View projects
+          </a>
+        </div>
+      </div>
+
+      <div
+        class="scroll-anchor hidden sm:flex justify-center pt-4 sm:pt-6 transition-opacity duration-300 opacity-0 pointer-events-none"
+      >
+        <a
+          href="#experience"
+          class="group inline-block select-none"
+          aria-label="Scroll to Experience"
+        >
+          <BorderGlow
+            client:visible
+            edgeSensitivity={0}
+            minProximityOnHover={0.75}
+            borderRadius={0}
+            glowRadius={10}
+            glowIntensity={0.8}
+            coneSpread={25}
+            animated
+            colors={["#FFFFFF", "#FFFFFF", "#FFFFFF"]}
+            glowColor="0 0 100"
+            backgroundColor="#000000"
+            fillOpacity={0.15}
+            className="w-fit inline-flex items-center px-3 py-1 cursor-pointer"
+            timeout={3000}
+          >
+            <span
+              class="font-mono text-[10px] text-zinc-400 group-hover:text-white transition-colors uppercase tracking-widest flex items-center gap-1.5"
             >
-              Edric Russell Ramilo
-            </h1>
-            <p
-              class="text-[10px] sm:text-xs font-mono tracking-widest text-primary uppercase mt-1 sm:mt-2"
+              <span>Experience ↓</span>
+            </span>
+          </BorderGlow>
+        </a>
+      </div>
+    </section>
+
+    <section
+      id="experience"
+      class="min-h-[100dvh] w-full flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8 py-12 sm:py-16 scroll-mt-5 lg:scroll-mt-0 relative snap-start"
+      aria-label="Experience"
+    >
+      <div class="max-w-2xl w-full mx-auto my-auto space-y-6 sm:space-y-8">
+        <div class="text-center space-y-2">
+          <h2
+            class="font-display font-bold text-2xl sm:text-3xl text-white tracking-tight"
+          >
+            Experience.
+          </h2>
+        </div>
+
+        <div class="space-y-4">
+          {
+            experienceMilestones.map((milestone) => (
+              <div class="group border border-white/10 bg-zinc-950/80 p-5 space-y-4 hover:border-white/25 transition-colors rounded-none text-left">
+                <div class="flex items-start gap-3.5 sm:gap-4 border-b border-white/10 pb-3.5">
+                  <div class="w-11 h-11 sm:w-12 sm:h-12 shrink-0 bg-zinc-900/90 border border-white/10 group-hover:border-white/25 flex items-center justify-center p-2 transition-colors rounded-none">
+                    {milestone.logo ? (
+                      <img
+                        src={milestone.logo}
+                        alt={
+                          milestone.logoAlt || `${milestone.organization} logo`
+                        }
+                        class="w-full h-full object-contain opacity-75 group-hover:opacity-100 transition-opacity"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <svg
+                        class="w-5 h-5 sm:w-6 sm:h-6 text-zinc-400 group-hover:text-white transition-colors"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.75"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                      >
+                        <polyline points="4 17 10 11 4 5" />
+                        <line x1="12" y1="19" x2="20" y2="19" />
+                      </svg>
+                    )}
+                  </div>
+
+                  <div class="flex-1 min-w-0 flex flex-col sm:flex-row sm:items-start justify-between gap-1.5 sm:gap-4">
+                    <div>
+                      <h3 class="font-display font-bold text-base sm:text-lg text-white leading-snug">
+                        {milestone.role}
+                      </h3>
+                      <div class="text-xs text-zinc-400 font-sans mt-0.5">
+                        {milestone.organization}
+                      </div>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-2 shrink-0 pt-0.5 sm:pt-0">
+                      <span class="font-mono text-xs text-zinc-300 px-2 py-0.5 bg-zinc-900 border border-white/10 whitespace-nowrap">
+                        {milestone.period}
+                      </span>
+                      <span
+                        class={`font-mono text-xs px-2 py-0.5 uppercase border whitespace-nowrap ${milestone.status === "Current" ? "text-emerald-400 border-emerald-500/30" : "text-zinc-400 border-white/10"}`}
+                      >
+                        {milestone.status}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <ul class="space-y-1.5 text-xs sm:text-sm text-zinc-400 font-sans leading-relaxed list-disc list-outside pl-4 sm:pl-5">
+                  {milestone.highlights.map((highlight) => (
+                    <li>{highlight}</li>
+                  ))}
+                </ul>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+
+      <div
+        class="scroll-anchor hidden sm:flex justify-center mt-auto pt-4 sm:pt-6 transition-opacity duration-300 opacity-0 pointer-events-none"
+      >
+        <a
+          href="#projects"
+          class="group inline-block select-none"
+          aria-label="Scroll to Projects"
+        >
+          <BorderGlow
+            client:visible
+            edgeSensitivity={0}
+            minProximityOnHover={0.75}
+            borderRadius={0}
+            glowRadius={10}
+            glowIntensity={0.8}
+            coneSpread={25}
+            animated
+            colors={["#FFFFFF", "#FFFFFF", "#FFFFFF"]}
+            glowColor="0 0 100"
+            backgroundColor="#000000"
+            fillOpacity={0.15}
+            className="w-fit inline-flex items-center px-3 py-1 cursor-pointer"
+            timeout={4000}
+          >
+            <span
+              class="font-mono text-[10px] text-zinc-400 group-hover:text-white transition-colors uppercase tracking-widest flex items-center gap-1.5"
             >
-              [ Aspiring Cloud Engineer ]
-            </p>
-            <p
-              class="text-xs sm:text-sm text-muted-foreground flex items-center gap-1.5 mt-2 sm:mt-3"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+              <span>Featured Projects ↓</span>
+            </span>
+          </BorderGlow>
+        </a>
+      </div>
+    </section>
+
+    <section
+      id="projects"
+      class="min-h-[100dvh] w-full flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8 py-12 sm:py-16 scroll-mt-5 lg:scroll-mt-0 relative snap-start"
+      aria-label="Projects"
+    >
+      <div class="max-w-4xl w-full mx-auto my-auto space-y-6 sm:space-y-8">
+        <div class="text-center space-y-2">
+          <h2
+            class="pt-6 font-display font-bold text-2xl sm:text-3xl text-white tracking-tight"
+          >
+            Featured Projects.
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {
+            flagshipProjects.map((project) => (
+              <a
+                href={project.href}
+                class="flex flex-col justify-between border border-white/10 bg-zinc-950/80 p-5 hover:border-white/30 transition-colors group rounded-none text-left"
               >
-                <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
-                <circle cx="12" cy="10" r="3"></circle>
+                <div class="space-y-2.5">
+                  <div class="flex items-center justify-between">
+                    <span class="font-mono text-xs text-zinc-500 font-bold">
+                      [{project.id}]
+                    </span>
+                  </div>
+                  <h3 class="font-display font-bold text-base text-white group-hover:text-zinc-200 transition-colors">
+                    {project.title}
+                  </h3>
+                  <p class="text-xs text-zinc-400 font-sans leading-relaxed">
+                    {project.summary}
+                  </p>
+                </div>
+                <div class="pt-4 border-t border-white/10 mt-4 flex flex-row-reverse font-mono text-[10px] text-zinc-500">
+                  <span class="text-zinc-400 group-hover:text-white group-hover:translate-x-0.5 transition-all">
+                    Read spec →
+                  </span>
+                </div>
+              </a>
+            ))
+          }
+        </div>
+
+        <div
+          class="border border-dashed border-white/15 bg-zinc-950/40 p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left"
+        >
+          <div class="space-y-0.5">
+            <h3 class="font-display font-bold text-sm text-white">
+              Explore all projects in the catalog
+            </h3>
+            <p class="text-xs text-zinc-400 font-sans">Look at it.</p>
+          </div>
+          <a
+            href="/projects"
+            class="inline-flex items-center justify-center font-display text-xs font-semibold uppercase tracking-wider h-8 px-4 bg-white text-black hover:bg-zinc-200 transition-all rounded-none shrink-0"
+          >
+            View all projects
+          </a>
+        </div>
+      </div>
+
+      <div
+        class="scroll-anchor hidden sm:flex justify-center mt-auto pt-4 sm:pt-6 transition-opacity duration-300 opacity-0 pointer-events-none"
+      >
+        <a
+          href="#skills"
+          class="group inline-block select-none"
+          aria-label="Scroll to Skills"
+        >
+          <BorderGlow
+            client:visible
+            edgeSensitivity={0}
+            minProximityOnHover={0.75}
+            borderRadius={0}
+            glowRadius={10}
+            glowIntensity={0.8}
+            coneSpread={25}
+            animated
+            colors={["#FFFFFF", "#FFFFFF", "#FFFFFF"]}
+            glowColor="0 0 100"
+            backgroundColor="#000000"
+            fillOpacity={0.15}
+            className="w-fit inline-flex items-center px-3 py-1 cursor-pointer"
+            timeout={4500}
+          >
+            <span
+              class="font-mono text-[10px] text-zinc-400 group-hover:text-white transition-colors uppercase tracking-widest flex items-center gap-1.5"
+            >
+              <span>Cert & Tech Skills ↓</span>
+            </span>
+          </BorderGlow>
+        </a>
+      </div>
+    </section>
+
+    <section
+      id="skills"
+      class="min-h-[100dvh] w-full flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8 py-12 sm:py-16 scroll-mt-5 lg:scroll-mt-0 relative snap-start"
+      aria-label="Credentials and skills"
+    >
+      <div class="max-w-4xl w-full mx-auto my-auto space-y-6 sm:space-y-7">
+        <div class="text-center space-y-2">
+          <h2
+            class="font-display font-bold text-2xl sm:text-3xl text-white tracking-tight"
+          >
+            Certifications.
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
+          {
+            certifications.map((cert) => (
+              <div class="border border-white/10 bg-zinc-950/80 p-5 space-y-3 hover:border-white/25 transition-colors rounded-none">
+                <div class="flex items-start justify-between gap-3">
+                  <div class="space-y-1">
+                    <h3 class="font-display font-bold text-base text-white tracking-tight">
+                      {cert.title}
+                    </h3>
+                    <div class="text-xs text-zinc-400 font-sans">
+                      Issued by {cert.issuer} • {cert.year}
+                    </div>
+                  </div>
+                  <div class="w-8 h-8 border border-white/15 bg-zinc-900 flex items-center justify-center p-1 shrink-0">
+                    {cert.id === "aws" && <AwsLogo class="w-full h-full" />}
+                    {cert.id === "pearson" && (
+                      <PearsonLogo class="w-full h-full" />
+                    )}
+                  </div>
+                </div>
+
+                <div class="space-y-1.5 border-t border-white/10 pt-2.5">
+                  <span class="font-mono text-[11px] text-zinc-500 uppercase">
+                    Competencies:
+                  </span>
+                  <ul class="space-y-1 text-xs text-zinc-300 font-sans list-disc list-outside pl-4">
+                    {cert.pillars.map((pillar) => (
+                      <li>{pillar}</li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div class="pt-1">
+                  <a
+                    href={cert.badgeUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center gap-1.5 font-mono text-xs text-zinc-300 hover:text-white underline underline-offset-4"
+                  >
+                    Verify badge on Credly
+                    <svg
+                      class="size-3"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
+                      />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+
+        <div class="text-center space-y-2">
+          <h2
+            class="font-display font-bold text-2xl sm:text-3xl text-white tracking-tight"
+          >
+            Technical Skills.
+          </h2>
+        </div>
+
+        <div
+          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-left"
+        >
+          {
+            skillDomains.map((domain) => (
+              <div class="border border-white/10 bg-zinc-950/80 p-3.5 space-y-2">
+                <h3 class="font-display font-bold text-xs text-white border-b border-white/10 pb-1.5 uppercase tracking-wide">
+                  {domain.domain}
+                </h3>
+                <ul class="space-y-1 font-mono text-[11px] text-zinc-400">
+                  {domain.skills.map((skill) => (
+                    <li class="flex items-center gap-1.5 text-zinc-300">
+                      <span class="w-1.5 h-1.5 bg-white/70 rounded-none shrink-0" />
+                      <span>{skill}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+
+      <div
+        class="scroll-anchor hidden sm:flex justify-center mt-auto pt-4 sm:pt-6 transition-opacity duration-300 opacity-0 pointer-events-none"
+      >
+        <a
+          href="#gallery"
+          class="group inline-block select-none"
+          aria-label="Scroll to Community and Life Gallery"
+        >
+          <BorderGlow
+            client:visible
+            edgeSensitivity={0}
+            minProximityOnHover={0.75}
+            borderRadius={0}
+            glowRadius={10}
+            glowIntensity={0.8}
+            coneSpread={25}
+            animated
+            colors={["#FFFFFF", "#FFFFFF", "#FFFFFF"]}
+            glowColor="0 0 100"
+            backgroundColor="#000000"
+            fillOpacity={0.15}
+            className="w-fit inline-flex items-center px-3 py-1 cursor-pointer"
+            timeout={5000}
+          >
+            <span
+              class="font-mono text-[10px] text-zinc-400 group-hover:text-white transition-colors uppercase tracking-widest flex items-center gap-1.5"
+            >
+              <span>Community & Life Gallery ↓</span>
+            </span>
+          </BorderGlow>
+        </a>
+      </div>
+    </section>
+
+    <section
+      id="gallery"
+      class="min-h-[100dvh] w-full flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8 py-12 sm:py-16 scroll-mt-5 lg:scroll-mt-0 relative snap-start"
+      aria-label="Community, Events and Life Outside the Terminal"
+    >
+      <div class="max-w-5xl w-full mx-auto my-auto space-y-4 sm:space-y-6">
+        <div class="text-center space-y-2">
+          <h2
+            class="font-display font-bold text-2xl sm:text-3xl text-white tracking-tight"
+          >
+            Community and Life.
+          </h2>
+          <p
+            class="text-xs sm:text-sm text-zinc-400 font-sans max-w-lg mx-auto"
+          >
+            Workshops, competitions, food, and personal highlights.
+          </p>
+        </div>
+
+        <div class="w-full flex justify-center">
+          <ArchGallery client:visible />
+        </div>
+      </div>
+
+      <div
+        class="scroll-anchor hidden sm:flex justify-center mt-auto pt-4 sm:pt-6 transition-opacity duration-300 opacity-0 pointer-events-none"
+      >
+        <a
+          href="#contact"
+          class="group inline-block select-none"
+          aria-label="Scroll to Recommendation and Contact"
+        >
+          <BorderGlow
+            client:visible
+            edgeSensitivity={0}
+            minProximityOnHover={0.75}
+            borderRadius={0}
+            glowRadius={10}
+            glowIntensity={0.8}
+            coneSpread={25}
+            animated
+            colors={["#FFFFFF", "#FFFFFF", "#FFFFFF"]}
+            glowColor="0 0 100"
+            backgroundColor="#000000"
+            fillOpacity={0.15}
+            className="w-fit inline-flex items-center px-3 py-1 cursor-pointer"
+            timeout={5000}
+          >
+            <span
+              class="font-mono text-[10px] text-zinc-400 group-hover:text-white transition-colors uppercase tracking-widest flex items-center gap-1.5"
+            >
+              <span>Recommendation & Connect ↓</span>
+            </span>
+          </BorderGlow>
+        </a>
+      </div>
+    </section>
+
+    <section
+      id="contact"
+      class="min-h-[100dvh] w-full flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8 py-12 sm:py-16 scroll-mt-5 lg:scroll-mt-0 relative snap-start"
+      aria-label="Recommendation and Contact"
+    >
+      <div class="max-w-4xl w-full mx-auto my-auto space-y-6 sm:space-y-8">
+        <div class="text-center space-y-2">
+          <h2
+            class="font-display font-bold text-2xl sm:text-3xl text-white tracking-tight"
+          >
+            Testimonials and Connect.
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 text-left">
+          <div
+            class="lg:col-span-5 border border-white/10 bg-zinc-950/80 p-6 space-y-4 flex flex-col justify-between rounded-none"
+          >
+            <div class="space-y-3">
+              <svg
+                class="size-6 text-zinc-600"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"
+                ></path>
               </svg>
-              Batangas, Philippines
-            </p>
+
+              <blockquote
+                class="text-xs sm:text-sm text-zinc-200 font-sans italic leading-relaxed"
+              >
+                "Edric was an excellent classmate to work with. He consistently
+                arrived on time, learned quickly, and contributed well in group
+                settings. His professionalism and positive attitude made working
+                with him a genuine pleasure."
+              </blockquote>
+            </div>
+
+            <div class="border-t border-white/10 pt-3 font-mono text-xs">
+              <div class="font-bold text-white">Fatimah D. Sta. Romana</div>
+              <div class="text-zinc-500 text-[11px]">
+                UI/UX designer & project collaborator
+              </div>
+            </div>
           </div>
 
-          <div class="flex flex-wrap items-center gap-2 sm:gap-3">
-            <a
-              href="mailto:edric.ramilo191@gmail.com"
-              aria-label="Send email"
-              class="inline-flex items-center gap-2 px-3 py-2 text-[10px] font-mono uppercase tracking-wider rounded-sm border border-border bg-card hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all hover-lift"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+          <div
+            class="lg:col-span-7 border border-white/10 bg-zinc-950/80 p-6 space-y-5 flex flex-col justify-between rounded-none"
+          >
+            <div class="space-y-2">
+              <h3
+                class="font-display font-bold text-xl text-white tracking-tight"
               >
-                <rect width="20" height="16" x="2" y="4" rx="2"></rect>
-                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
-              </svg>
-              Email Me
-            </a>
-
-            <a
-              href="https://www.linkedin.com/in/edric-russell-ramilo/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Visit LinkedIn"
-              class="inline-flex items-center justify-center p-2 rounded-sm border border-border bg-card hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all hover-lift w-9 h-9"
-            >
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 15 15"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                class="currentColor"
+                Let's work together
+              </h3>
+              <p
+                class="text-xs sm:text-sm text-zinc-400 font-sans leading-relaxed"
               >
-                <path
-                  d="M2 1C1.44772 1 1 1.44772 1 2V13C1 13.5523 1.44772 14 2 14H13C13.5523 14 14 13.5523 14 13V2C14 1.44772 13.5523 1 13 1H2ZM3.05 6H4.95V12H3.05V6ZM5.075 4.005C5.075 4.59871 4.59371 5.08 4 5.08C3.4063 5.08 2.925 4.59871 2.925 4.005C2.925 3.41129 3.4063 2.93 4 2.93C4.59371 2.93 5.075 3.41129 5.075 4.005ZM12 8.35713C12 6.55208 10.8334 5.85033 9.67449 5.85033C9.29502 5.83163 8.91721 5.91119 8.57874 6.08107C8.32172 6.21007 8.05265 6.50523 7.84516 7.01853H7.79179V6.00044H6V12.0047H7.90616V8.8112C7.8786 8.48413 7.98327 8.06142 8.19741 7.80987C8.41156 7.55832 8.71789 7.49825 8.95015 7.46774H9.02258C9.62874 7.46774 10.0786 7.84301 10.0786 8.78868V12.0047H11.9847L12 8.35713Z"
-                  fill="currentColor"
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"></path>
-              </svg>
-            </a>
-
-            <a
-              href="https://github.com/Ramilo-Edric03"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Visit GitHub"
-              class="inline-flex items-center justify-center p-2 rounded-sm border border-border bg-card hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all hover-lift w-9 h-9"
-            >
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 15 15"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                class="currentColor"
-              >
-                <path
-                  d="M7.49933 0.25C3.49635 0.25 0.25 3.49593 0.25 7.50024C0.25 10.703 2.32715 13.4206 5.2081 14.3797C5.57084 14.446 5.70302 14.2222 5.70302 14.0299C5.70302 13.8576 5.69679 13.4019 5.69323 12.797C3.67661 13.235 3.25112 11.825 3.25112 11.825C2.92132 10.9874 2.44599 10.7644 2.44599 10.7644C1.78773 10.3149 2.49584 10.3238 2.49584 10.3238C3.22353 10.375 3.60629 11.0711 3.60629 11.0711C4.25298 12.1788 5.30335 11.8588 5.71638 11.6732C5.78225 11.205 5.96962 10.8854 6.17658 10.7043C4.56675 10.5209 2.87415 9.89918 2.87415 7.12104C2.87415 6.32925 3.15677 5.68257 3.62053 5.17563C3.54576 4.99226 3.29697 4.25521 3.69174 3.25691C3.69174 3.25691 4.30015 3.06196 5.68522 3.99973C6.26337 3.83906 6.8838 3.75895 7.50022 3.75583C8.1162 3.75895 8.73619 3.83906 9.31523 3.99973C10.6994 3.06196 11.3069 3.25691 11.3069 3.25691C11.7026 4.25521 11.4538 4.99226 11.3795 5.17563C11.8441 5.68257 12.1245 6.32925 12.1245 7.12104C12.1245 9.9063 10.4292 10.5192 8.81452 10.6985C9.07444 10.9224 9.30633 11.3648 9.30633 12.0413C9.30633 13.0102 9.29742 13.7922 9.29742 14.0299C9.29742 14.2239 9.42828 14.4496 9.79591 14.3788C12.6746 13.4179 14.75 10.7025 14.75 7.50024C14.75 3.49593 11.5036 0.25 7.49933 0.25Z"
-                  fill="currentColor"
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"></path>
-              </svg>
-            </a>
+                I am looking for entry-level cloud engineering and software
+                development roles. If you have an open position or want to
+                collaborate on architecture or automation projects, feel free to
+                reach out.
+              </p>
+            </div>
 
             <div
-              class="inline-flex items-center gap-2 px-3 py-1.5 border border-border bg-secondary/30 rounded-sm text-[8px] md:text-xs font-mono uppercase tracking-wider text-foreground/80"
+              class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3 border-t border-white/10"
             >
-              <span class="relative flex h-2 w-2">
-                <span
-                  class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"
-                ></span>
-                <span
-                  class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"
-                ></span>
-              </span>
-              Open to Entry-Level Tech Opportunities
+              <a
+                href="mailto:edric.ramilo191@gmail.com"
+                class="border border-white/10 bg-black p-3 space-y-1 hover:border-white/30 transition-colors group rounded-none"
+              >
+                <div class="font-mono text-[10px] text-zinc-500 uppercase">
+                  Email
+                </div>
+                <div
+                  class="font-mono text-xs text-white font-bold group-hover:underline truncate"
+                >
+                  edric.ramilo191
+                </div>
+                <div class="text-[10px] text-zinc-400">Send an email →</div>
+              </a>
+
+              <a
+                href="https://www.linkedin.com/in/edric-russell-ramilo/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="border border-white/10 bg-black p-3 space-y-1 hover:border-white/30 transition-colors group rounded-none"
+              >
+                <div class="font-mono text-[10px] text-zinc-500 uppercase">
+                  LinkedIn
+                </div>
+                <div
+                  class="font-mono text-xs text-white font-bold group-hover:underline truncate"
+                >
+                  edric-russell-ramilo
+                </div>
+                <div class="text-[10px] text-zinc-400">Connect profile →</div>
+              </a>
+
+              <a
+                href="https://github.com/Ramilo-Edric03"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="border border-white/10 bg-black p-3 space-y-1 hover:border-white/30 transition-colors group rounded-none"
+              >
+                <div class="font-mono text-[10px] text-zinc-500 uppercase">
+                  GitHub
+                </div>
+                <div
+                  class="font-mono text-xs text-white font-bold group-hover:underline truncate"
+                >
+                  Ramilo-Edric03
+                </div>
+                <div class="text-[10px] text-zinc-400">View repos →</div>
+              </a>
             </div>
           </div>
         </div>
       </div>
+
+      <div
+        class="scroll-anchor hidden sm:flex justify-center mt-auto pt-4 sm:pt-6 transition-opacity duration-300 opacity-0 pointer-events-none"
+      >
+        <a
+          href="#footer"
+          class="group inline-block select-none"
+          aria-label="Scroll to Footer"
+        >
+          <BorderGlow
+            client:visible
+            edgeSensitivity={0}
+            minProximityOnHover={0.75}
+            borderRadius={0}
+            glowRadius={10}
+            glowIntensity={0.8}
+            coneSpread={25}
+            animated
+            colors={["#FFFFFF", "#FFFFFF", "#FFFFFF"]}
+            glowColor="0 0 100"
+            backgroundColor="#000000"
+            fillOpacity={0.15}
+            className="w-fit inline-flex items-center px-3 py-1 cursor-pointer"
+            timeout={3500}
+          >
+            <span
+              class="font-mono text-[10px] text-zinc-400 group-hover:text-white transition-colors uppercase tracking-widest flex items-center gap-1.5"
+            >
+              <span>Footer & Navigation ↓</span>
+            </span>
+          </BorderGlow>
+        </a>
+      </div>
     </section>
 
-    <div class="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-8 gap-6">
-      <!-- About -->
-      <Card
-        title="About"
-        class="md:col-span-6 md:col-start-1 md:row-start-1 lg:col-span-6 lg:col-start-1 lg:row-start-1 animate-slide-up animate-delay-100"
-      >
-        <svg
-          slot="icon"
-          xmlns="http://www.w3.org/2000/svg"
-          width="14"
-          height="14"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="text-muted-foreground"
-        >
-          <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
-          <circle cx="12" cy="7" r="4"></circle>
-        </svg>
-        <div
-          class="space-y-4 text-foreground/80 leading-relaxed font-sans text-xs md:text-sm text-justify"
-        >
-          <p>
-            I'm a BSIT Graduate focused on cloud infrastructure and full-stack
-            development. I enjoy designing and building systems that solve real
-            problems with scalable, maintainable solutions, and I thrive on
-            tackling complex workflows and technical challenges.
-          </p>
-          <p>
-            I'm self-motivated and constantly learning through AWS Skill
-            Builder, AWS Educate, and hands-on projects. My core strengths are
-            problem-solving, discipline, and a growth mindset, which help me
-            refine both my skills and the systems I work on.
-          </p>
-          <p>
-            Currently, I'm expanding my knowledge in cloud services and
-            full-stack deployment pipelines, and I'm looking to connect with
-            developers, mentors, and communities in cloud engineering to
-            collaborate, contribute, and grow.
-          </p>
-        </div>
-      </Card>
-
-      <!-- Experience -->
-      <Card
-        title="Experience"
-        class="md:col-span-6 md:col-start-1 md:row-start-4 lg:col-span-2 lg:col-start-7 lg:row-start-1 lg:row-span-3 h-full animate-slide-up animate-delay-200"
-      >
-        <svg
-          slot="icon"
-          xmlns="http://www.w3.org/2000/svg"
-          width="14"
-          height="14"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="text-muted-foreground"
-        >
-          <rect width="20" height="14" x="2" y="7" rx="2" ry="2"></rect>
-          <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
-        </svg>
-        <div
-          class="relative border-l border-stone-900 border-solid ml-2 space-y-6 py-2"
-        >
-          {
-            experience.map((job) => (
-              <div class="relative pl-6">
-                <span
-                  class={cn(
-                    "absolute -left-1 top-1.5 h-2 w-2 border rounded-full border-background transition-colors hover:bg-primary ",
-                    job.current ? "bg-primary" : "bg-white",
-                  )}
-                />
-                <div class="flex flex-col gap-0.5">
-                  <h4 class="font-bold text-xs uppercase tracking-wider text-foreground">
-                    {job.role}
-                  </h4>
-                  <p class="text-xs text-muted-foreground font-mono">
-                    {job.company}
-                  </p>
-                  <span class="text-[10px] font-mono text-muted-foreground/70">
-                    {job.year}
-                  </span>
-                </div>
-              </div>
-            ))
-          }
-        </div>
-      </Card>
-
-      <!-- Tech Stack -->
-      <Card
-        title="Tech Stack"
-        class="md:col-span-6 md:col-start-1 md:row-start-2 lg:col-span-6 lg:col-start-1 lg:row-start-2 animate-slide-up animate-delay-100"
-      >
-        <svg
-          slot="icon"
-          xmlns="http://www.w3.org/2000/svg"
-          width="14"
-          height="14"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="text-muted-foreground"
-        >
-          <polyline points="16 18 22 12 16 6"></polyline>
-          <polyline points="8 6 2 12 8 18"></polyline>
-        </svg>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {
-            Object.entries(techStack).map(([category, techs]) => (
-              <div class="space-y-3">
-                <h4 class="text-xs font-mono font-bold uppercase tracking-wider text-muted-foreground border-b border-border pb-1">
-                  {category}
-                </h4>
-                <div class="flex flex-wrap gap-2">
-                  {techs.map((tech) => (
-                    <Badge
-                      variant="outline"
-                      class="px-2.5 py-1 text-xs inline-flex items-center gap-1.5"
-                    >
-                      <span
-                        class="inline-flex items-center text-foreground/75"
-                        set:html={getTechIcon(tech)}
-                      />
-                      {tech}
-                    </Badge>
-                  ))}
-                </div>
-              </div>
-            ))
-          }
-        </div>
-      </Card>
-
-      <!-- Projects -->
-      <Card
-        title="Projects"
-        href="/projects"
-        class="md:col-span-3 md:col-start-4 md:row-start-3 lg:col-span-3 lg:col-start-4 lg:row-start-3 animate-slide-up animate-delay-200"
-      >
-        <svg
-          slot="icon"
-          xmlns="http://www.w3.org/2000/svg"
-          width="14"
-          height="14"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="text-muted-foreground"
-        >
-          <path
-            d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"
-          ></path>
-        </svg>
-        <div class="space-y-4">
-          {
-            projects.map((project) => (
-              <div class="group/project flex flex-col gap-1 border-b border-border pb-3 last:border-0 last:pb-0">
-                <div class="flex items-center justify-between">
-                  <h4 class="font-bold text-sm text-foreground/90 group-hover/project:text-primary transition-colors">
-                    {project.title}
-                  </h4>
-                  <Badge
-                    variant="outline"
-                    class="text-[9px] h-4.5 px-1.5 font-mono"
-                  >
-                    {project.tag}
-                  </Badge>
-                </div>
-                <p class="text-xs text-muted-foreground line-clamp-2 leading-relaxed">
-                  {project.desc}
-                </p>
-              </div>
-            ))
-          }
-        </div>
-      </Card>
-
-      <!-- certifications -->
-      <Card
-        title="Certifications"
-        class="md:col-span-2 md:col-start-1 md:row-start-5 lg:col-span-3 lg:col-start-1 lg:row-start-4 animate-slide-up animate-delay-300"
-      >
-        <svg
-          slot="icon"
-          xmlns="http://www.w3.org/2000/svg"
-          width="14"
-          height="14"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="text-muted-foreground"
-        >
-          <circle cx="12" cy="8" r="7"></circle>
-          <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
-        </svg>
-        <ul class="space-y-4">
-          <li class="border-b border-border pb-2 last:border-0 last:pb-0">
-            <a
-              href="https://www.credly.com/badges/de4b2160-0dd5-4ef0-9c2d-f880cbbc813e/public_url"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="group/cert block space-y-1 hover:text-primary transition-colors"
-            >
-              <div class="flex items-start justify-between gap-4">
-                <span
-                  class="text-xs font-bold uppercase tracking-wider leading-snug"
-                  >AWS Certified Cloud Practitioner</span
-                >
-                <span class="text-xs font-mono text-muted-foreground">2025</span
-                >
-              </div>
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://www.credly.com/badges/a312ea48-a993-456f-ab6e-f42f686c6961/public_url"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="group/cert block space-y-1 hover:text-primary transition-colors"
-            >
-              <div class="flex items-start justify-between gap-4">
-                <span
-                  class="text-xs font-bold uppercase tracking-wider leading-snug"
-                  >Certiport IT Specialist - Cloud Computing</span
-                >
-                <span class="text-xs font-mono text-muted-foreground">2026</span
-                >
-              </div>
-            </a>
-          </li>
-        </ul>
-      </Card>
-
-      <!-- Current Focus -->
-      <Card
-        title="Current Focus"
-        class="md:col-span-3 md:col-start-1 md:row-start-3 lg:col-span-3 lg:col-start-1 lg:row-start-3 animate-slide-up animate-delay-300"
-      >
-        <svg
-          slot="icon"
-          xmlns="http://www.w3.org/2000/svg"
-          width="14"
-          height="14"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="text-muted-foreground"
-        >
-          <circle cx="12" cy="12" r="10"></circle>
-          <polyline points="12 6 12 12 16 14"></polyline>
-        </svg>
-        <ul class="space-y-4 text-xs font-mono tracking-wider">
-          <li class="flex items-start gap-2.5">
-            <span class="text-primary font-bold">&gt;</span>
-            <span class="text-foreground/80 leading-normal"
-              >Actively learning cloud architecture and AWS services through
-              hands-on projects and certifications.</span
-            >
-          </li>
-          <li class="flex items-start gap-2.5">
-            <span class="text-primary font-bold">&gt;</span>
-            <span class="text-foreground/80 leading-normal"
-              >Building full-stack applications with modern frameworks and
-              exploring serverless technologies.</span
-            >
-          </li>
-        </ul>
-      </Card>
-
-      <!-- Recommendations -->
-      <Card
-        title="Recommendations"
-        class="md:col-span-4 md:col-start-3 md:row-start-5 lg:col-span-5 lg:col-start-4 lg:row-start-4 animate-slide-up animate-delay-300"
-      >
-        <svg
-          slot="icon"
-          xmlns="http://www.w3.org/2000/svg"
-          width="14"
-          height="14"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="text-muted-foreground"
-        >
-          <path
-            d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"
-          ></path>
-          <path
-            d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"
-          ></path>
-        </svg>
-        <blockquote
-          class="italic text-foreground text-xs md:text-sm border-l-2 border-primary pl-4 py-1 leading-relaxed"
-        >
-          "Edric was an excellent classmate to work with. He consistently
-          arrived on time, learned quickly, and contributed well in group
-          settings. His professionalism and positive attitude made working with
-          him a genuine pleasure."
-        </blockquote>
-        <div class="mt-4 flex items-center gap-3 pl-4">
-          <div>
-            <p
-              class="text-xs font-bold uppercase tracking-wider text-muted-foreground"
-            >
-              Fatimah D. Sta. Romana
-            </p>
-            <p class="text-[10px] font-mono text-muted-foreground">
-              UI/UX Designer
-            </p>
-          </div>
-        </div>
-      </Card>
-    </div>
-
-    <!-- Footer  -->
-    <footer
-      class="grid grid-cols-1 md:grid-cols-4 gap-6 border-t border-white pt-8 mt-12"
+    <section
+      id="footer"
+      class="min-h-[100dvh] w-full flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8 py-12 scroll-mt-12 lg:scroll-mt-0 relative snap-start"
+      aria-label="System footer"
     >
-      <div class="space-y-3">
-        <h4 class="font-bold text-xs uppercase tracking-wider text-foreground">
-          Socials
-        </h4>
-        <div class="flex flex-col gap-2 font-mono text-xs">
+      <div class="max-w-3xl w-full mx-auto my-auto text-center space-y-8">
+        <div class="space-y-4 flex flex-col items-center w-full">
+          <h2 class="sr-only">Edric Russell Ramilo</h2>
+          <div
+            class="relative w-full h-30 sm:h-30 md:h-30 flex items-center justify-center select-none overflow-hidden"
+          >
+            <ASCIIText
+              client:visible
+              text="EDRIC RUSSELL RAMILO"
+              mobileText="EDRIC"
+              asciiFontSize={6}
+              enableWaves={false}
+              colorMode="monochrome"
+            />
+          </div>
+          <p
+            class="text-xs sm:text-sm text-zinc-400 font-sans max-w-md mx-auto"
+          >
+            Aspiring Cloud & Software Engineer, Philippines
+          </p>
+        </div>
+
+        <nav
+          class="flex flex-wrap items-center justify-center gap-3 sm:gap-6 font-mono text-xs uppercase tracking-wider text-zinc-400"
+          aria-label="Footer navigation"
+        >
+          <a href="#top" class="hover:text-white transition-colors">Top</a>
+          <span class="text-zinc-700">/</span>
+          <a href="#experience" class="hover:text-white transition-colors"
+            >Experience</a
+          >
+          <span class="text-zinc-700">/</span>
+          <a href="#projects" class="hover:text-white transition-colors"
+            >Projects</a
+          >
+          <span class="text-zinc-700">/</span>
+          <a href="/projects" class="hover:text-white transition-colors"
+            >Catalog</a
+          >
+          <span class="text-zinc-700">/</span>
+          <a href="#skills" class="hover:text-white transition-colors">Skills</a
+          >
+          <span class="text-zinc-700">/</span>
+          <a href="#gallery" class="hover:text-white transition-colors"
+            >Gallery</a
+          >
+          <span class="text-zinc-700">/</span>
+          <a href="#contact" class="hover:text-white transition-colors"
+            >Contact</a
+          >
+        </nav>
+
+        <div
+          class="flex flex-wrap items-center justify-center gap-4 sm:gap-6 font-mono text-xs text-zinc-400"
+        >
           <a
-            href="https://linkedin.com/in/edric-russell-ramilo/"
+            href="mailto:edric.ramilo191@gmail.com"
+            class="hover:text-white transition-colors"
+          >
+            edric.ramilo191@gmail.com
+          </a>
+          <span class="text-zinc-700">•</span>
+          <a
+            href="https://www.linkedin.com/in/edric-russell-ramilo/"
             target="_blank"
             rel="noopener noreferrer"
-            class="text-muted-foreground hover:text-primary transition-colors flex items-center gap-1.5"
+            class="hover:text-white transition-colors"
           >
-            LinkedIn &rarr;
+            LinkedIn
           </a>
+          <span class="text-zinc-700">•</span>
           <a
             href="https://github.com/Ramilo-Edric03"
             target="_blank"
             rel="noopener noreferrer"
-            class="text-muted-foreground hover:text-primary transition-colors flex items-center gap-1.5"
+            class="hover:text-white transition-colors"
           >
-            GitHub &rarr;
+            GitHub
           </a>
         </div>
-      </div>
 
-      <div class="md:col-span-2 space-y-3">
-        <h4 class="font-bold text-xs uppercase tracking-wider text-foreground">
-          Focus & Growth
-        </h4>
-        <p class="text-xs text-muted-foreground leading-relaxed">
-          Pursuing standard AWS tracks and studying cloud automation, deployment
-          networks, and reliable systems. Happy to collaborate on open source or
-          infrastructure builds.
-        </p>
-        <a
-          href="mailto:edric.ramilo191@gmail.com"
-          class="text-xs text-primary font-mono hover:underline inline-block mt-1"
-        >
-          [ Connect With Me ]
-        </a>
-      </div>
-
-      <div class="space-y-3">
-        <h4 class="font-bold text-xs uppercase tracking-wider text-foreground">
-          Contact
-        </h4>
-        <div class="space-y-1 font-mono text-[11px] text-muted-foreground">
+        <div class="hidden sm:flex justify-center pt-4 sm:pt-6">
           <a
-            href="mailto:edric.ramilo191@gmail.com"
-            class="block hover:text-primary transition-colors"
+            href="#top"
+            class="group inline-block select-none"
+            aria-label="Return to Top"
           >
-            edric.ramilo191@gmail.com
+            <BorderGlow
+              client:visible
+              edgeSensitivity={0}
+              minProximityOnHover={0.75}
+              borderRadius={0}
+              glowRadius={10}
+              glowIntensity={0.8}
+              coneSpread={25}
+              animated
+              colors={["#FFFFFF", "#FFFFFF", "#FFFFFF"]}
+              glowColor="0 0 100"
+              backgroundColor="#000000"
+              fillOpacity={0.15}
+              className="w-fit inline-flex items-center px-3 py-1 cursor-pointer"
+              timeout={2500}
+            >
+              <span
+                class="font-mono text-[10px] text-zinc-400 group-hover:text-white transition-colors uppercase tracking-widest flex items-center gap-1.5"
+              >
+                <span>▲ Return to Top</span>
+              </span>
+            </BorderGlow>
           </a>
-          <p class="block">phone: available on request</p>
+        </div>
+
+        <div
+          class="border-t border-white/10 pt-6 text-zinc-500 font-mono text-[11px]"
+        >
+          © {currentYear} Edric Russell Ramilo. All systems nominal.
         </div>
       </div>
-    </footer>
-
-    <!-- Credits -->
-    <div
-      class="text-[10px] font-mono text-muted-foreground/60 flex justify-between items-center border-t border-border/50 pt-4 mt-6"
-    >
-      <p>Design Inspired by Bryl Lim</p>
-      <p>
-        &copy; {new Date().getFullYear()} Edric Ramilo
-      </p>
-    </div>
+    </section>
   </main>
+
+  <script>
+    const anchors = document.querySelectorAll(".scroll-anchor");
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            const show = entry.isIntersecting;
+            entry.target.classList.toggle("opacity-100", show);
+            entry.target.classList.toggle("pointer-events-auto", show);
+            entry.target.classList.toggle("opacity-0", !show);
+            entry.target.classList.toggle("pointer-events-none", !show);
+          });
+        },
+        { rootMargin: "-65% 0px 0px 0px" },
+      );
+      anchors.forEach((el) => observer.observe(el));
+    } else {
+      anchors.forEach((el) =>
+        el.classList.remove("opacity-0", "pointer-events-none"),
+      );
+    }
+  </script>
 </Layout>

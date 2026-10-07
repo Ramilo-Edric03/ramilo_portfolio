@@ -26,5 +26,12 @@ pnpm-debug.log*
 #skills
 .agent/
 .agents/
-
+.impeccable
 .design-system/
+
+#docs
+doc/
+PRODUCT.md
+DESIGN.md
+skills-lock.json
+

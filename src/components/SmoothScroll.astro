@@ -1,0 +1,74 @@
+---
+// SmoothScroll component powered by Lenis
+// Provides buttery-smooth inertial momentum scrolling, anchor handling, and precision scroll telemetry
+---
+
+<div
+  class="fixed top-0 left-0 right-0 h-[2px] bg-white/10 z-[100] pointer-events-none select-none"
+  aria-hidden="true"
+>
+  <div
+    id="scroll-progress-bar"
+    class="h-full w-full bg-white origin-left scale-x-0 transition-transform duration-75 ease-out will-change-transform"
+  >
+  </div>
+</div>
+
+<script>
+  import Lenis from "lenis";
+
+  // Check user preference for motion
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+
+  // Initialize Lenis instance
+  const lenis = new Lenis({
+    duration: 1.15,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    smoothWheel: !prefersReducedMotion,
+    syncTouch: false, // Maintain native touch responsiveness and momentum on mobile
+    autoRaf: true,
+    anchors: true,
+    respectReducedMotion: true,
+  });
+
+  // Expose lenis instance globally for external interaction or debugging
+  // @ts-ignore
+  window.lenis = lenis;
+
+  const progressBar = document.getElementById("scroll-progress-bar");
+
+  // Handle smooth scroll on internal anchor navigation reliably across browsers
+  document.querySelectorAll('a[href*="#"]').forEach((link) => {
+    link.addEventListener("click", (e) => {
+      const href = link.getAttribute("href");
+      if (!href) return;
+
+      const hashIndex = href.indexOf("#");
+      if (hashIndex === -1) return;
+
+      const targetPath = href.slice(0, hashIndex);
+      const hash = href.slice(hashIndex);
+
+      // Verify if target is on the current page
+      const currentPath = window.location.pathname;
+      const isCurrentPage =
+        targetPath === "" ||
+        targetPath === currentPath ||
+        (targetPath === "/" && currentPath === "/");
+
+      if (isCurrentPage && hash && hash !== "#") {
+        const targetElement = document.querySelector(hash);
+        if (targetElement) {
+          e.preventDefault();
+          history.pushState(null, "", hash);
+          lenis.scrollTo(targetElement as HTMLElement, {
+            offset: 0,
+            duration: 1.2,
+          });
+        }
+      }
+    });
+  });
+</script>
