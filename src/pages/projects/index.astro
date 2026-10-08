@@ -1,7 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import Header from "../../components/Header.astro";
-import Footer from "../../components/Footer.astro";
 import { projects } from "../../data/projects";
 ---
 
@@ -11,9 +10,10 @@ import { projects } from "../../data/projects";
 >
   <Header currentPath="/projects" />
 
-  <main
-    class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 space-y-10"
-  >
+  <div class="w-full lg:pl-[200px] xl:pl-[216px]">
+    <main
+      class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 space-y-10"
+    >
     <header class="space-y-2 border-b border-white/10 pb-6">
       <h1 class="font-display font-bold text-3xl text-white tracking-tight">
         Projects
@@ -63,5 +63,6 @@ import { projects } from "../../data/projects";
         <span>Back to home</span>
       </a>
     </div>
-  </main>
+    </main>
+  </div>
 </Layout>
