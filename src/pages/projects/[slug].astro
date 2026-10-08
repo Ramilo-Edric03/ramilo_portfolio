@@ -32,9 +32,10 @@ const { project, prevProject, nextProject } = Astro.props;
 >
   <Header currentPath={`/projects/${project.slug}`} />
 
-  <main
-    class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 space-y-12"
-  >
+  <div class="w-full lg:pl-[200px] xl:pl-[216px]">
+    <main
+      class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 space-y-12"
+    >
     <div>
       <a
         href="/projects"
@@ -165,5 +166,6 @@ const { project, prevProject, nextProject } = Astro.props;
         {nextProject.title} →
       </a>
     </footer>
-  </main>
+    </main>
+  </div>
 </Layout>
