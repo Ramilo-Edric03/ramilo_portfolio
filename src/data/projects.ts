@@ -85,7 +85,7 @@ export const projects: Project[] = [
     title: "Share-Your-Secret",
     category: "Serverless app",
     status: "Production architecture",
-    summary: "Zero-knowledge secret-sharing web application built on AWS serverless primitives. Encrypts sensitive credentials in the browser using the Web Crypto API with AES-256-GCM before transport, storing ciphertext in DynamoDB with single-read destruction and automated 24-hour TTL expiration.",
+    summary: "Zero-knowledge secret-sharing web application built on AWS serverless services. Encrypts sensitive credentials in the browser using the Web Crypto API with AES-256-GCM before transport, storing ciphertext in DynamoDB with single-read purge and automated 24-hour TTL expiration.",
     images: [
       {
         src: "https://ik.imagekit.io/fxzzjqc0u/project-images/share-your-secret/image1?updatedAt=1790693926751",
@@ -147,7 +147,7 @@ export const projects: Project[] = [
     title: "OpenKitchen",
     category: "Browser automation",
     status: "Internship project",
-    summary: "Internal operations platform developed at Snapp Ventures to replace repetitive manual web scraping workflows. Translates plain English instructions into structured JSON execution steps via the Gemini API, drives browser automation in Playwright, and exports formatted tables to Excel via ExcelJS.",
+    summary: "Tool to replace repetitive manual web scraping workflows. Translates plain English instructions into structured JSON execution steps via the Gemini API, drives browser automation in Playwright, and exports formatted tables to Excel via ExcelJS.",
     images: [
       {
         src: "https://ik.imagekit.io/fxzzjqc0u/project-images/openkitchen/Screenshot%202026-09-29%20194400.png?updatedAt=1790689648129",
@@ -219,7 +219,7 @@ export const projects: Project[] = [
     title: "RespoBilis",
     category: "Disaster coordination",
     status: "Capstone project",
-    summary: "Municipal disaster coordination platform built as a capstone project for emergency teams in Tanauan City, Batangas. Synchronizes distress reports and responder dispatches in real time using Supabase websockets, calculating driving paths via Open Source Routing Machine to navigate road obstacles.",
+    summary: "Municipal disaster coordination platform built as a capstone project for emergency teams in Tanauan City, Batangas. Synchronizes distress reports and responder dispatches in real time using Supabase websockets, calculating driving paths via OSRM to navigate road obstacles.",
     images: [
       {
         src: "https://ik.imagekit.io/fxzzjqc0u/project-images/respobilis/image40.png?updatedAt=1790689648339",
@@ -243,8 +243,8 @@ export const projects: Project[] = [
       },
       {
         src: "https://ik.imagekit.io/fxzzjqc0u/project-images/respobilis/image80.png",
-        alt: "Administrative command center with response statistics",
-        caption: "Central admin command dashboard tracking city-wide response metrics",
+        alt: "Administrative dashboard with response statistics",
+        caption: "Central admin dashboard tracking city-wide response metrics",
       },
       {
         src: "https://ik.imagekit.io/fxzzjqc0u/project-images/respobilis/image27.png?updatedAt=1790689648849",
@@ -295,7 +295,7 @@ export const projects: Project[] = [
     title: "apt.connect",
     category: "Property management",
     status: "Deployed",
-    summary: "Full-stack property management application built for landlords to oversee residential buildings, units, and leases. Manages monthly billing ledgers, tracks maintenance work orders through resolution, and generates downloadable PDF payment receipts backed by a normalized MySQL schema.",
+    summary: "Full-stack property management application built for landlords to oversee residential buildings, units, and leases. Manages monthly billing ledgers, tracks maintenance work orders through resolution, and generates downloadable PDF payment receipts.",
     images: [
       {
         src: "https://ik.imagekit.io/fxzzjqc0u/project-images/aptconnect/1749654129449.jpg?updatedAt=1790689564780",
